@@ -1,4 +1,4 @@
-Certainly! Here are the detailed explanations for each topic in text format:
+
 
 ---
 
@@ -112,5 +112,3 @@ This code converts the string `"10"` to an integer using `int()`.
 Literals are constants representing fixed values in Python. Examples include numeric literals (`10`, `3.14`), string literals (`'hello'`, `"world"`), and boolean literals (`True`, `False`).
 
 ---
-
-I hope this text format is more convenient for you. If you have any further questions or need additional clarification, feel free to ask!

@@ -10,7 +10,7 @@ file
 - functions, modules, classes
 advance decorators, generators, iterators
 
-Certainly! Let's provide a brief overview of how Python works internally.
+
 
 ### Python Inner Working:
 
@@ -86,9 +86,7 @@ Certainly! Let's provide a brief overview of how Python works internally.
            counter += 1
    ```
 
-In summary, Python's inner workings involve the transformation of source code into bytecode, which is then executed by the Python Virtual Machine. The dynamic typing, memory management, and additional features contribute to Python's ease of use and flexibility. Understanding these aspects can provide insights into optimizing code and addressing performance considerations.
 
-Certainly! Let's delve into more details for each topic with examples and explanations.
 
 ### Python in the Shell:
 
@@ -225,6 +223,206 @@ Certainly! Let's delve into more details for each topic with examples and explan
   result = a + b * c
   ```
 
-These examples provide a more detailed exploration of each topic. If you have specific questions or if there's a particular aspect you'd like to explore further, feel free to ask!
+
+
+### Integers (`int`):
+
+#### Integer Representation:
+- Integers in Python have arbitrary precision, meaning they can be as large as the available memory allows.
+- Python automatically switches between regular integers and long integers as needed.
+
+#### Example:
+```python
+x = 1234567890123456789012345678901234567890
+```
+
+#### Operations:
+```python
+a = 10
+b = 3
+result_add = a + b  # 13
+result_sub = a - b  # 7
+result_mul = a * b  # 30
+result_div = a / b  # 3.3333333333333335
+result_floor_div = a // b  # 3
+result_mod = a % b  # 1
+result_exp = a ** b  # 1000
+```
+
+### Floating-Point Numbers (`float`):
+
+#### Floating-Point Representation:
+- Floating-point numbers in Python follow the IEEE 754 standard.
+- Python uses 64 bits to represent a float.
+
+#### Example:
+```python
+y = 3.141592653589793
+```
+
+#### Operations:
+```python
+c = 2.5
+d = 1.2
+result_add_float = c + d  # 3.7
+result_div_float = c / d  # 2.0833333333333335
+```
+
+#### Floating-Point Precision Issues:
+- Due to the binary nature of computers, certain decimal fractions cannot be precisely represented.
+
+```python
+decimal_fraction = 1.1 + 2.2  # Result may not be exactly 3.3
+```
+
+### Complex Numbers (`complex`):
+
+#### Complex Number Representation:
+- Complex numbers have both a real and an imaginary part.
+
+#### Example:
+```python
+z = complex(2, 3)
+```
+
+#### Operations:
+```python
+complex1 = complex(2, 3)
+complex2 = complex(1, 2)
+result_add_complex = complex1 + complex2  # (3+5j)
+result_mul_complex = complex1 * complex2  # (-4+7j)
+```
+
+#### Accessing Real and Imaginary Parts:
+```python
+real_part = complex1.real  # 2.0
+imag_part = complex1.imag  # 3.0
+```
+
+### Numeric Type Conversion:
+
+#### Conversion Functions:
+- Python provides functions to convert between different numeric types.
+
+```python
+num_str = "10"
+num_int = int(num_str)
+num_float = float(num_str)
+num_complex = complex(num_str, 5)
+```
+
+### Mathematical Functions (Using `math` module):
+
+#### Example:
+```python
+import math
+
+square_root = math.sqrt(25)  # 5.0
+sine_value = math.sin(math.radians(30))  # 0.49999999999999994
+logarithm_base_10 = math.log10(100)  # 2.0
+```
+
+### Numeric Comparisons:
+
+#### Comparison Operators:
+- Python supports various comparison operators for numeric types.
+
+```python
+a = 10
+b = 5
+is_greater = a > b  # True
+is_equal = a == b  # False
+```
+
+### Important Considerations:
+
+#### Floating-Point Precision:
+
+- Be cautious of precision issues in floating-point arithmetic. Use the `decimal` module for more precise decimal arithmetic.
+
+```python
+from decimal import Decimal
+
+decimal_fraction = Decimal('1.1') + Decimal('2.2')  # Decimal('3.3')
+```
+
+#### Complex Number Attributes:
+
+- Access the real and imaginary parts of complex numbers using `.real` and `.imag`.
+
+```python
+complex_num = complex(2, 3)
+real_part = complex_num.real  # 2.0
+imag_part = complex_num.imag  # 3.0
+```
+
+Certainly! Let's break it down in simpler terms:
+
+### `repr()`
+
+- **What it does:**
+  - `repr()` is like a secret code for objects. It gives a detailed and exact description of an object that a computer could understand.
+- **Example:**
+  ```python
+  x = 10
+  print(repr(x))  # Output: '10'
+  ```
+- **Use case:**
+  - When you want a detailed and unambiguous description of an object, like for debugging.
+
+### `str()`
+
+- **What it does:**
+  - `str()` is like explaining something to a friend. It gives a simpler, human-friendly version of an object.
+- **Example:**
+  ```python
+  y = 3.14
+  print(str(y))  # Output: '3.14'
+  ```
+- **Use case:**
+  - When you want to create a message or output that's easy for people to read.
+
+### `print()`
+
+- **What it does:**
+  - `print()` is like showing something on the screen. It takes one or more things and displays them for you to see.
+- **Example:**
+  ```python
+  name = "John"
+  print("Hello, " + name)  # Output: Hello, John
+  ```
+- **Use case:**
+  - Whenever you want to display information or results to the user.
+
+### Bringing it Together:
+
+```python
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __repr__(self):
+        return f"Person(name={repr(self.name)}, age={repr(self.age)})"
+
+    def __str__(self):
+        return f"{self.name}, {self.age} years old"
+
+person_obj = Person("Alice", 30)
+
+# Using repr and str explicitly
+repr_result = repr(person_obj)
+str_result = str(person_obj)
+
+# Using print to display the object
+print(person_obj)  # Output: Alice, 30 years old
+```
+
+In this example:
+- `repr` gives a detailed, computer-friendly description of the object.
+- `str` provides a simpler, human-readable version.
+- `print` simply shows the object in a way that's easy for you to see.
+
+Think of it like telling a computer exactly what something is (`repr`), explaining it to a friend in a simpler way (`str`), and just showing it on a screen (`print`). Each has its own purpose!
 
 
