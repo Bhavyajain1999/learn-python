@@ -425,4 +425,413 @@ In this example:
 
 Think of it like telling a computer exactly what something is (`repr`), explaining it to a friend in a simpler way (`str`), and just showing it on a screen (`print`). Each has its own purpose!
 
+In Python, the `floor()` function is a part of the `math` module and is used to find the floor (or the largest integer less than or equal to) of a given number. The `floor()` function returns a floating-point number representing the floor value.
 
+Here's a simple example:
+
+```python
+import math
+
+result = math.floor(3.14)
+print(result)  # Output: 3
+```
+
+In this example, `math.floor(3.14)` returns `3` because it is the largest integer less than or equal to `3.14`.
+
+Another example:
+
+```python
+import math
+
+result = math.floor(-2.8)
+print(result)  # Output: -3
+```
+
+Here, `math.floor(-2.8)` returns `-3` because it is the largest integer less than or equal to `-2.8`.
+
+The `math.floor()` function is useful in situations where you need to round down a floating-point number to the nearest integer.
+
+The `trunc()` function in Python is a method of the `math` module, and it is used to truncate a floating-point number towards zero, returning the closest integer that is not greater in magnitude than the given number. Unlike `floor()`, `trunc()` does not round towards the smaller integer; instead, it simply removes the decimal part.
+
+Here's an example:
+
+```python
+import math
+
+result = math.trunc(3.14)
+print(result)  # Output: 3
+```
+
+In this example, `math.trunc(3.14)` returns `3` by removing the decimal part of the number.
+
+Another example:
+
+```python
+import math
+
+result = math.trunc(-2.8)
+print(result)  # Output: -2
+```
+
+Here, `math.trunc(-2.8)` returns `-2` by removing the decimal part and preserving the sign of the original number.
+
+The `trunc()` function is useful when you want to get the integer part of a floating-point number without rounding towards positive or negative infinity.
+
+Certainly! Let's delve deeper into handling number precision in Python:
+
+### Floating-Point Precision:
+
+1. **Binary Representation:**
+   - Floating-point numbers in computers are represented in binary, leading to occasional precision issues.
+   - Example:
+     ```python
+     result = 0.1 + 0.2
+     print(result)  # Output: 0.30000000000000004
+     ```
+
+2. **Using `decimal` Module:**
+   - The `decimal` module provides the `Decimal` data type for decimal arithmetic.
+   - Example:
+     ```python
+     from decimal import Decimal, getcontext
+
+     getcontext().prec = 4  # Set precision explicitly
+     result_decimal = Decimal('0.1') + Decimal('0.2')
+     print(result_decimal)  # Output: Decimal('0.3')
+     ```
+
+### Rounding Numbers:
+
+1. **Using `round()` Function:**
+   - The `round()` function rounds a floating-point number to a specified number of decimal places.
+   - Example:
+     ```python
+     result_rounded = round(0.1 + 0.2, 2)
+     print(result_rounded)  # Output: 0.3
+     ```
+
+2. **Custom Rounding with `decimal` Module:**
+   - The `Decimal` class provides methods for custom rounding using different rounding modes.
+   - Example:
+     ```python
+     from decimal import Decimal, ROUND_HALF_UP
+
+     result_decimal_rounded = Decimal('0.1') + Decimal('0.2')
+     result_decimal_rounded = result_decimal_rounded.quantize(Decimal('0.00'), rounding=ROUND_HALF_UP)
+     print(result_decimal_rounded)  # Output: Decimal('0.30')
+     ```
+
+### Equality Testing with Tolerance:
+
+1. **Direct Equality Testing:**
+   - Directly comparing floating-point numbers for equality might lead to unexpected results.
+   - Example:
+     ```python
+     a = 0.1 + 0.2
+     b = 0.3
+     print(a == b)  # Output: False
+     ```
+
+2. **Tolerance for Comparison:**
+   - Use a small tolerance value for comparison instead of direct equality.
+   - Example:
+     ```python
+     tolerance = 1e-10
+     print(abs(a - b) < tolerance)  # Output: True
+     ```
+
+### Handling Large Numbers:
+
+1. **`math.isinf()` and `math.isnan()`:**
+   - The `math` module provides functions to check if a number is infinity or NaN.
+   - Example:
+     ```python
+     import math
+
+     x = float('inf')
+     print(math.isinf(x))  # Output: True
+     ```
+
+2. **Using `decimal` Module for Large Precision:**
+   - The `decimal` module can provide higher precision for calculations involving extremely large or small numbers.
+   - Example:
+     ```python
+     from decimal import Decimal
+
+     result_large_precision = Decimal('1e100') * Decimal('1e100')
+     print(result_large_precision)
+     ```
+
+These strategies help in addressing various aspects of number precision in Python, ensuring that calculations are performed accurately and with the desired level of precision. Depending on the use case, developers can choose the appropriate approach to handle precision issues effectively.
+
+In Python, bitwise operations are used to manipulate individual bits of integers. Additionally, there are various other mathematical and logical operations available. Let's explore bitwise operations and some other commonly used operations in Python:
+
+### Bitwise Operations:
+
+1. **AND (`&`):**
+   - Performs bitwise AND operation on corresponding bits of two integers.
+   ```python
+   result_and = 5 & 3  # Binary: 101 & 011 = 001
+   print(result_and)  # Output: 1
+   ```
+
+2. **OR (`|`):**
+   - Performs bitwise OR operation on corresponding bits of two integers.
+   ```python
+   result_or = 5 | 3  # Binary: 101 | 011 = 111
+   print(result_or)   # Output: 7
+   ```
+
+3. **XOR (`^`):**
+   - Performs bitwise XOR (exclusive OR) operation on corresponding bits of two integers.
+   ```python
+   result_xor = 5 ^ 3  # Binary: 101 ^ 011 = 110
+   print(result_xor)   # Output: 6
+   ```
+
+4. **NOT (`~`):**
+   - Performs bitwise NOT operation, inverting all the bits of an integer.
+   ```python
+   result_not = ~5  # Binary: ~101 = -6
+   print(result_not)  # Output: -6
+   ```
+
+5. **Left Shift (`<<`):**
+   - Shifts the bits of an integer to the left by a specified number of positions.
+   ```python
+   result_left_shift = 5 << 2  # Binary: 101 << 2 = 10100
+   print(result_left_shift)   # Output: 20
+   ```
+
+6. **Right Shift (`>>`):**
+   - Shifts the bits of an integer to the right by a specified number of positions.
+   ```python
+   result_right_shift = 5 >> 1  # Binary: 101 >> 1 = 10
+   print(result_right_shift)    # Output: 2
+   ```
+
+### Other Mathematical Operations:
+
+1. **Addition (`+`):**
+   ```python
+   result_add = 5 + 3  # Output: 8
+   ```
+
+2. **Subtraction (`-`):**
+   ```python
+   result_subtract = 5 - 3  # Output: 2
+   ```
+
+3. **Multiplication (`*`):**
+   ```python
+   result_multiply = 5 * 3  # Output: 15
+   ```
+
+4. **Division (`/`):**
+   ```python
+   result_divide = 5 / 3  # Output: 1.6666666666666667
+   ```
+
+5. **Floor Division (`//`):**
+   - Returns the floor value after dividing two numbers.
+   ```python
+   result_floor_divide = 5 // 3  # Output: 1
+   ```
+
+6. **Modulus (`%`):**
+   - Returns the remainder after dividing two numbers.
+   ```python
+   result_modulus = 5 % 3  # Output: 2
+   ```
+
+7. **Exponentiation (`**`):**
+   - Raises the first number to the power of the second number.
+   ```python
+   result_exponentiate = 5 ** 3  # Output: 125
+   ```
+
+### Logical Operations:
+
+1. **Logical AND (`and`):**
+   - Returns `True` if both operands are `True`.
+   ```python
+   result_logical_and = True and False  # Output: False
+   ```
+
+2. **Logical OR (`or`):**
+   - Returns `True` if at least one operand is `True`.
+   ```python
+   result_logical_or = True or False  # Output: True
+   ```
+
+3. **Logical NOT (`not`):**
+   - Returns `True` if the operand is `False`, and vice versa.
+   ```python
+   result_logical_not = not True  # Output: False
+   ```
+
+These operations provide a range of functionalities for manipulating and performing calculations on numerical and boolean values in Python. Depending on the context and the specific problem, you can choose the appropriate operation to achieve the desired result.
+
+In Python, the `random` module provides functionalities for generating random numbers. Let's explore some commonly used functions from the `random` module:
+
+### Generating Random Float:
+
+- **`random()` function:**
+  - Returns a random float in the range [0.0, 1.0).
+  ```python
+  import random
+
+  result = random.random()
+  print(result)
+  ```
+
+### Generating Random Integer:
+
+- **`randint(a, b)` function:**
+  - Returns a random integer in the range [a, b], including both endpoints.
+  ```python
+  import random
+
+  result = random.randint(1, 10)
+  print(result)
+  ```
+
+### Generating Random Choice:
+
+- **`choice(seq)` function:**
+  - Returns a randomly selected element from the given sequence.
+  ```python
+  import random
+
+  options = ["apple", "banana", "orange"]
+  result = random.choice(options)
+  print(result)
+  ```
+
+### Shuffling a List:
+
+- **`shuffle(seq)` function:**
+  - Randomly shuffles the elements of a sequence in place.
+  ```python
+  import random
+
+  my_list = [1, 2, 3, 4, 5]
+  random.shuffle(my_list)
+  print(my_list)
+  ```
+
+### Generating Random Floating-Point Number within a Range:
+
+- **`uniform(a, b)` function:**
+  - Returns a random float in the range [a, b).
+  ```python
+  import random
+
+  result = random.uniform(2.5, 5.5)
+  print(result)
+  ```
+
+### Setting Seed for Reproducibility:
+
+- **`seed(x)` function:**
+  - Seeds the random number generator with the given value `x`. Using the same seed produces the same sequence of random numbers.
+  ```python
+  import random
+
+  random.seed(42)  # Seed for reproducibility
+  result = random.random()
+  print(result)
+  ```
+
+### Generating Random Sample:
+
+- **`sample(seq, k)` function:**
+  - Returns a k-length list of unique elements chosen from the given sequence.
+  ```python
+  import random
+
+  my_list = [1, 2, 3, 4, 5]
+  result = random.sample(my_list, 3)
+  print(result)
+  ```
+
+### Generating Cryptographically Secure Random Numbers:
+
+- **`SystemRandom` class:**
+  - Provides a cryptographically secure random number generator.
+  ```python
+  from random import SystemRandom
+
+  secure_random = SystemRandom()
+  result = secure_random.random()
+  print(result)
+  ```
+
+These functions from the `random` module offer flexibility for generating various types of random values. Depending on your specific requirements, you can choose the appropriate function to obtain random numbers, sequences, or choices. Keep in mind that for cryptographic purposes, the `SystemRandom` class is recommended to ensure a higher level of randomness and security.
+
+The issue you're observing, where `0.1 + 0.1 + 0.4` doesn't yield precisely `0.6`, is due to the inherent limitations of floating-point representation in computers. Floating-point numbers in Python are represented using binary, and certain decimal fractions cannot be precisely represented. This can lead to rounding errors, resulting in unexpected values. Here are a few examples:
+
+### Example 1: Rounding Error
+
+```python
+result = 0.1 + 0.1 + 0.4
+print(result)  # Output: 0.6000000000000001
+```
+
+In this case, the sum of `0.1 + 0.1 + 0.4` results in a value that's very close to, but not exactly, `0.6`.
+
+### Example 2: Accumulative Rounding Errors
+
+```python
+result = 0.1
+for _ in range(10):
+    result += 0.1
+print(result)  # Output: 1.0000000000000002
+```
+
+Accumulating rounding errors can become more pronounced over multiple operations, as seen in this loop.
+
+### Example 3: Precision Limitation
+
+```python
+result = 1.0
+for _ in range(50):
+    result /= 3
+print(result)  # Output: 1.0171847893528547e-29
+```
+
+In this example, repeatedly dividing by 3 leads to a result that is very close to zero but not exactly zero due to precision limitations.
+
+### Example 4: Large Numbers
+
+```python
+result = 1e16 + 1
+print(result)  # Output: 10000000000000001.0
+```
+
+When dealing with large numbers, precision can be lost in the least significant digits.
+
+### Example 5: Subtraction Precision
+
+```python
+result = 1.1 - 0.2
+print(result)  # Output: 0.8999999999999999
+```
+
+Subtraction of two seemingly simple numbers can result in a value with precision issues.
+
+### Handling Precision: Decimal Module
+
+To handle precision more precisely, especially in financial or critical calculations, you can use the `decimal` module, which provides a `Decimal` data type that avoids some of the precision issues associated with floating-point arithmetic.
+
+```python
+from decimal import Decimal, getcontext
+
+getcontext().prec = 4  # Set precision explicitly
+result_decimal = Decimal('0.1') + Decimal('0.1') + Decimal('0.4')
+print(result_decimal)  # Output: Decimal('0.6')
+```
+
+Using `Decimal` allows you to control the precision and perform arithmetic with more predictable results.
+
+Keep in mind that while `Decimal` provides higher precision, it may come with some performance trade-offs, and it's often not necessary for general-purpose calculations. Consider using it when precision is critical for your specific use case.
