@@ -835,3 +835,160 @@ print(result_decimal)  # Output: Decimal('0.6')
 Using `Decimal` allows you to control the precision and perform arithmetic with more predictable results.
 
 Keep in mind that while `Decimal` provides higher precision, it may come with some performance trade-offs, and it's often not necessary for general-purpose calculations. Consider using it when precision is critical for your specific use case.
+
+In Python, a string is a sequence of characters enclosed within either single quotes (''), double quotes ("") or triple quotes (''''' or """ """). Strings are immutable, meaning they cannot be changed after they are created. Here's a brief overview along with some code examples:
+
+1. **Creating Strings**: You can create strings using single, double, or triple quotes:
+
+```python
+single_quoted = 'This is a single-quoted string.'
+double_quoted = "This is a double-quoted string."
+triple_quoted = '''This is a triple-quoted string.'''
+```
+
+2. **Accessing Characters**: You can access individual characters in a string using indexing:
+
+```python
+my_string = "Hello, World!"
+print(my_string[0])  # Output: 'H'
+print(my_string[7])  # Output: 'W'
+```
+
+3. **String Slicing**: You can slice strings to get substrings:
+
+```python
+my_string = "Hello, World!"
+print(my_string[0:5])  # Output: 'Hello'
+```
+
+4. **String Concatenation**: You can concatenate strings using the `+` operator:
+
+```python
+first_name = "John"
+last_name = "Doe"
+full_name = first_name + " " + last_name
+print(full_name)  # Output: 'John Doe'
+```
+
+5. **String Methods**: Python provides many built-in string methods for various operations like finding substrings, replacing text, converting case, etc.
+
+```python
+my_string = "Hello, World!"
+print(my_string.lower())    # Output: 'hello, world!'
+print(my_string.upper())    # Output: 'HELLO, WORLD!'
+print(my_string.replace('Hello', 'Hi'))  # Output: 'Hi, World!'
+print(my_string.find('World'))  # Output: 7
+```
+
+6. **String Formatting**: Python offers several ways to format strings, including the `str.format()` method and f-strings (formatted string literals):
+
+```python
+name = "Alice"
+age = 30
+formatted_string = "My name is {} and I am {} years old.".format(name, age)
+print(formatted_string)  # Output: 'My name is Alice and I am 30 years old.'
+
+# Using f-strings
+formatted_string = f"My name is {name} and I am {age} years old."
+print(formatted_string)  # Output: 'My name is Alice and I am 30 years old.'
+```
+
+These are some basic operations with strings in Python. Strings are versatile and used extensively in Python programming for various purposes, including text processing, manipulation, and formatting.
+Certainly! In Python, strings have various methods that allow you to manipulate, format, and access their content. Let's delve into some of the commonly used methods along with special string literals:
+
+1. **String Concatenation**: Strings can be concatenated using the `+` operator.
+
+```python
+str1 = "Hello"
+str2 = "World"
+concatenated_str = str1 + " " + str2
+print(concatenated_str)  # Output: 'Hello World'
+```
+
+2. **String Repetition**: You can repeat a string multiple times using the `*` operator.
+
+```python
+str3 = "abc"
+repeated_str = str3 * 3
+print(repeated_str)  # Output: 'abcabcabc'
+```
+
+3. **String Formatting**: Python provides several ways to format strings, including the `%` operator, `str.format()` method, and f-strings (formatted string literals).
+
+```python
+name = "Alice"
+age = 30
+formatted_string = "My name is %s and I am %d years old." % (name, age)
+print(formatted_string)  # Output: 'My name is Alice and I am 30 years old.'
+
+# Using str.format() method
+formatted_string = "My name is {} and I am {} years old.".format(name, age)
+print(formatted_string)  # Output: 'My name is Alice and I am 30 years old.'
+
+# Using f-strings
+formatted_string = f"My name is {name} and I am {age} years old."
+print(formatted_string)  # Output: 'My name is Alice and I am 30 years old.'
+```
+
+4. **Raw String Literal (r-prefix)**: Raw string literals are used when you want to interpret backslashes as literal characters rather than escape characters.
+
+```python
+path = r"C:\Users\John\Documents"
+print(path)  # Output: 'C:\Users\John\Documents'
+```
+
+5. **String Methods**:
+
+- **`.split()`**: Splits a string into a list of substrings based on a delimiter.
+```python
+sentence = "This is a sentence."
+words = sentence.split()
+print(words)  # Output: ['This', 'is', 'a', 'sentence.']
+```
+
+- **`.strip()`**: Removes leading and trailing whitespaces from a string.
+```python
+text = "   Hello, World!   "
+stripped_text = text.strip()
+print(stripped_text)  # Output: 'Hello, World!'
+```
+
+- **`.replace()`**: Replaces occurrences of a substring within the string.
+```python
+message = "I like apples."
+new_message = message.replace("apples", "oranges")
+print(new_message)  # Output: 'I like oranges.'
+```
+
+- **`.find()`**: Finds the index of the first occurrence of a substring within the string.
+```python
+sentence = "This is a sentence."
+index = sentence.find("is")
+print(index)  # Output: 2
+```
+
+These are just a few examples of the many operations you can perform on strings in Python. Strings are versatile and offer a wide range of methods to manipulate and work with text data effectively.
+To convert a list to a string in Python, you can use the `join()` method of strings. To convert a string to a list, you can use the `split()` method. Here are examples demonstrating both conversions:
+
+1. **Convert List to String**:
+```python
+my_list = ['Hello', 'World', '!']
+# Join the elements of the list with a space between each element
+my_string = ' '.join(my_list)
+print(my_string)  # Output: 'Hello World !'
+```
+
+In this example, `' '.join(my_list)` joins all elements of `my_list` with a space in between each element.
+
+2. **Convert String to List**:
+```python
+my_string = "Hello World !"
+# Split the string by whitespace to get a list of words
+my_list = my_string.split()
+print(my_list)  # Output: ['Hello', 'World', '!']
+```
+
+In this example, `my_string.split()` splits the string at whitespace characters (spaces, tabs, newlines) and returns a list of the resulting substrings.
+
+Remember that `split()` and `join()` are very versatile methods and you can specify custom delimiters if needed. For instance, `my_string.split(',')` would split the string wherever there's a comma, and `' '.join(my_list)` would join the list elements with a space between them.
+
