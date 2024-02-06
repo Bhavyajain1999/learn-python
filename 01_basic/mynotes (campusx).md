@@ -112,3 +112,73 @@ This code converts the string `"10"` to an integer using `int()`.
 Literals are constants representing fixed values in Python. Examples include numeric literals (`10`, `3.14`), string literals (`'hello'`, `"world"`), and boolean literals (`True`, `False`).
 
 ---
+
+Session 2
+
+- Arithmetic operators
+-> + ,- , * ,/ ,// (integer divison) (5//2 = 2) basically for getting quotient
+
+- Relational operators
+-> >, <, = , >= , <=, != , ==
+
+- Logical operators
+-> And, or , !
+
+- Bitwise operators
+-> & (and) ,  | (OR)
+
+Membership operators in Python are used to test whether a value is a member of a sequence (like a string, list, or tuple). There are two membership operators: `in` and `not in`.
+
+### `in` Operator:
+
+The `in` operator checks if a value exists in a sequence. The basic syntax is:
+
+```python
+element in sequence
+```
+
+Here's an example:
+
+```python
+fruits = ["apple", "banana", "orange"]
+
+# Check if "banana" is in the list
+if "banana" in fruits:
+    print("Yes, 'banana' is in the list.")
+else:
+    print("No, 'banana' is not in the list.")
+```
+
+Output:
+```
+Yes, 'banana' is in the list.
+```
+
+### `not in` Operator:
+
+The `not in` operator checks if a value does not exist in a sequence. The basic syntax is:
+
+```python
+element not in sequence
+```
+
+Example:
+
+```python
+fruits = ["apple", "banana", "orange"]
+
+# Check if "grape" is not in the list
+if "grape" not in fruits:
+    print("Yes, 'grape' is not in the list.")
+else:
+    print("No, 'grape' is in the list.")
+```
+
+Output:
+```
+Yes, 'grape' is not in the list.
+```
+
+These operators are handy when you need to check whether a specific element is present or absent in a sequence. They work well with strings, lists, tuples, and other iterable data types in Python.
+
+
