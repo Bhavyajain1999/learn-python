@@ -70,3 +70,39 @@ The minimum angle between hour and minute hand when the time is 9 is 90 degress.
 
 ![Alt text](image.png)
 
+17.  Print the following pattern. Write a program to use for loop to print the following reverse number pattern.
+5 4 3 2 1 
+4 3 2 1 
+3 2 1 
+2 1 
+1
+
+18.  Print the following pattern.
+![Alt text](image-1.png)
+
+19. `Problem 3`:Write a program to pring the following pattern
+![Alt text](image-2.png)
+
+20.
+Write a program to print the following pattern
+1
+
+2 1
+
+3 2 1
+
+4 3 2 1
+
+5 4 3 2 1
+
+21. Write a Python Program to Find the Sum of the Series till the nth term:
+1 + x^2/2 + x^3/3 + … x^n/n
+n will be provided by the user
+
+22. The natural logarithm can be approximated by the following series.
+![Alt text](image-3.png)
+
+If x is input through the keyboard, write a program to calculate the sum of the first seven terms of this series.
+
+23. Write a program to calculate the sum of series up to n term. For example, if n =5 the series will become 2 + 22 + 222 + 2222 + 22222 = 24690. Take the user input and then calculate. And the output style should match which is given in the example.
+ 
