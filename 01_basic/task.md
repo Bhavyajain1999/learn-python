@@ -105,4 +105,22 @@ n will be provided by the user
 If x is input through the keyboard, write a program to calculate the sum of the first seven terms of this series.
 
 23. Write a program to calculate the sum of series up to n term. For example, if n =5 the series will become 2 + 22 + 222 + 2222 + 22222 = 24690. Take the user input and then calculate. And the output style should match which is given in the example.
+
+24. Write a program to print all the unique combinations of 1,2,3 and 4
+25. Write a program that will take a decimal number as input and prints out the binary equivalent of the number
+26. : Write a program that will take 2 numbers as input and prints the LCM and HCF of those 2 numbers
+27. Create Short Form from initial character
+Given a string create short form ofthe string from Initial character. Short form should be capitalised.
+28. Append second string in the middle of first string
+29. Given string contains a combination of the lower and upper case letters. Write a program to arrange the characters of a string so that all lowercase letters should come first.
+30. Take a alphanumeric string input and print the sum and average of the digits that appear in the string, ignoring all other characters.
+31. Removal of all characters from a string except integers
+32. Check whether the string is Symmetrical.
+Statement: Given a string. the task is to check if the string is symmetrical or not. A string is said to be symmetrical if both the halves of the string are the same.
+33. Reverse words in a given String
+Statement: We are given a string and we need to reverse words of a given string.
+34.  Find uncommon words from two Strings.
+Statement: Given two sentences as strings A and B. The task is to return a list of all uncommon words. A word is uncommon if it appears exactly once in any one of the sentences, and does not appear in the other sentence. Note: A sentence is a string of space-separated words. Each word consists only of lowercase letters.
+35.  Find a location of a word in a given sentence.
+36. Write a program that can remove all the duplicate characters from a string. User will provide the input.
  
