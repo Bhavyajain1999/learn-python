@@ -618,3 +618,5 @@ Certainly! Here are some additional string functions in Python:
 These additional string functions provide even more functionality for working with and manipulating strings in Python. They allow you to perform tasks such as searching for substrings, checking string properties, and validating string formats.
 
 
+
+
