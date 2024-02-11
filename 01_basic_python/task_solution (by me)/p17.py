@@ -1,9 +1,9 @@
-i = 0
+k = int(input('enter row: '))
 
 
-for i in range (1,6,1):
-    j = 6-i
-    for j in range (j, 0, -1):
+for i in range (0,k,1):
+    
+    for j in range (k-i, 0, -1):
         print(j , end=" ")
 
     print()  
