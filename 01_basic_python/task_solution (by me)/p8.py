@@ -5,11 +5,17 @@ sum = 0
 while(counter <= a and sum < 300):
 
  
-   if(counter % 5 != 0): 
-    sum = sum + counter
+   if(counter % 5 == 0): 
     counter = counter + 1
    else:
-     counter = counter + 1
+      sum = sum + counter
+      if sum>300:
+        sum = sum - counter
+        break
+      counter = counter + 1
+
+    
+
 
 print(sum)    
 
