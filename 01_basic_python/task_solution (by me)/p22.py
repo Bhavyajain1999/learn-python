@@ -6,11 +6,11 @@ x = float(input("Enter the value of x: "))
 result = 0
 
 # Computing the expression up to the nth term
-for i in range(2, 8):
+for i in range(1, 8):
     result += 1/2 * ((x-1)/x) ** (i)
     print(result)
 
 
-result = result + ((x-1)/x)
+
 # Printing the result
 print("Result:", result)
