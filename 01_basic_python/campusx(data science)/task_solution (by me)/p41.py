@@ -4,9 +4,9 @@
 L = [2,4,6,10,1]
 result = []
 
-for i in l:
+for i in L:
     sum = 0
-    for j in l:
+    for j in L:
         if i <= j:
             sum = sum + j
     result.append(sum)    
