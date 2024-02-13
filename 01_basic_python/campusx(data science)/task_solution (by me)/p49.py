@@ -1,0 +1,1 @@
+print([[j + 3*i for j in range(0,3)] for i in range(0,3)])
