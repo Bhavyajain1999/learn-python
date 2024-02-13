@@ -123,4 +123,116 @@ Statement: We are given a string and we need to reverse words of a given string.
 Statement: Given two sentences as strings A and B. The task is to return a list of all uncommon words. A word is uncommon if it appears exactly once in any one of the sentences, and does not appear in the other sentence. Note: A sentence is a string of space-separated words. Each word consists only of lowercase letters.
 35.  Find a location of a word in a given sentence.
 36. Write a program that can remove all the duplicate characters from a string. User will provide the input.
- 
+37. Combine two lists index-wise(columns wise)
+38. Add new item to list after a specified item
+39. Update no of items available
+40. Write a program to show no. of items of each candy type.
+41. Running Sum on list
+42. you are given a list of integers. You are asked to make a list by running through elements of the list by adding all elements greater and itself.
+i.e. Say given list is [2,4,6,10,1] resultant list will be [22,20,10,23].
+
+For 1st element 2 ->> these are greater (4+6+10) values and 2 itself so on adding becomes 22.
+
+For 2nd element 4 ->> greater elements are (6, 10) and 4 itself, so on adding 20
+
+like wise for all other elememts.
+
+[2,4,6,10,1]-->[22,20,16,10,23]
+
+43. Find list of common unique items from two list. and show in increasing order
+44. sort a list of alphanumeric strings based on product value of numeric character in it. If in any string there is no numeric character take it's product value as 1.
+45. Split String of list on K character.
+
+46. Convert Character Matrix to single String using string comprehension.
+47. Add Space between Potential Words.
+48. Write a program that can perform union operation on 2 lists
+49. Write a program that can find the max number of each row of a matrix
+50. Write a list comprehension to print the following matrix
+51. Write a list comprehension that can transpose a given matrix
+matrix = [
+[1,2,3],
+[4,5,6],
+[7,8,9]
+]
+
+[1, 4, 7]
+[2, 5, 8]
+[3, 6, 9]
+
+[ ]
+
+52. Write a list comprehension that can flatten a nested list
+Input
+matrix = [
+[1,2,3],
+[4,5,6],
+[7,8,9]
+]
+
+Output:
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+53. Join Tuples if similar initial element
+While working with Python tuples, we can have a problem in which we need to perform concatenation of records from the similarity of initial element. This problem can have applications in data domains such as Data Science.
+
+54.  Multiply Adjacent elements (both side) and take sum of right and lest side multiplication result.
+
+55. Check is tuples are same or not?
+Two tuples would be same if both tuples have same element at same index
+
+56. Count no of tuples, list and set from a list
+list1 = [{'hi', 'bye'},{'Geeks', 'forGeeks'},('a', 'b'),['hi', 'bye'],['a', 'b']]
+
+57.  Shortlist Students for a Job role
+Ask user to input students record and store in tuples for each record. Then Ask user to input three things he wants in the candidate- Primary Skill, Higher Education, Year of Graduation.
+
+Show every students record in form of tuples if matches all required criteria.
+
+It is assumed that there will be only one primry skill.
+
+If no such candidate found, print No such candidate
+
+58.     Write a program to find set of common elements in three lists using sets.
+59.  Write a program to count unique number of vowels using sets in a given string. Lowercase and upercase vowels will be taken as different.
+60. Write a program to Check if a given string is binary string of or not.
+A string is said to be binary if it's consists of only two unique characters.
+
+Take string input from user.
+
+61. find union of n arrays.
+
+62. Intersection of two lists. Intersection of two list means we need to take all those elements which are common to both of the initial lists and store them into another list. Only use using list-comprehension.
+
+63. Key with maximum unique values
+Given a dictionary with values list, extract key whose value has most unique values.
+64. Replace words from Dictionary. Given String, replace it’s words from lookup dictionary.
+65. Convert List to List of dictionaries. Given list values and keys list, convert these values to key value pairs in form of list of dictionaries.
+
+66.  Convert a list of Tuples into Dictionary.
+67. Sort Dictionary key and values List.
+68. Write a Python function that takes a list and returns a new list with unique elements of the first list.
+69. Write a Python function that accepts a hyphen-separated sequence of words as parameter and returns the words in a hyphen-separated sequence after sorting them alphabetically.
+70. Write a Python function that accepts a string and calculate the number of upper case letters and lower case letters.
+71. Write a Python program to print the even numbers from a given list.
+72. Write a Python function to check whether a number is perfect or not.
+A Perfect number is a number that is half the sum of all of its positive divisors (including itself).
+73. Write a Python function to concatenate any no of dictionaries to create a new one.
+74. Write a python function that accepts a string as input and returns the word with most occurence.
+75. Write a python function that receives a list of integers and prints out a histogram of bin size 10
+76. Write a python function that accepts a list of 2D co-ordinates and a query point, and then finds the the co-ordinate which is closest in terms of distance from the query point.
+77. Write a python program that receives a list of strings and performs bag of word operation on those strings
+
+https://en.wikipedia.org/wiki/Bag-of-words_model
+78. Write a Python program to add three given lists using Python map and lambda.
+79. Write a Python program to create a list containing the power of said number in bases raised to the corresponding number in the index using Python map.
+80. Using filter() and list() functions and .lower() method filter all the vowels in a given string.
+81. Use reduce to convert a 2D list to 1D
+82.  A dictionary contains following information about 5 employees:
+
+First name
+Last name
+Age
+Grade(Skilled,Semi-skilled,Highly skilled)
+Write a program using map/filter/reduce to a list of employees(first name + last name) who are highly skilled
+
+83. 
