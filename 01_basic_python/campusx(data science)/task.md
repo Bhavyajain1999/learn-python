@@ -277,7 +277,7 @@ Now randomly choose a pair from fruits by using random module and store the key 
 Now prompt the user to answer the color of the randomly chosen fruit.
 If correct print correct else print wrong.
 
-87.` Problem 5 based on OOP Python.
+87. Problem 5 based on OOP Python.
 
 TechWorld, a technology training center, wants to allocate courses for instructors. An instructor is identified by name, technology skills, experience and average feedback. An instructor is allocated a course, if he/she satisfies the below two conditions:
 - eligibility criteria:
