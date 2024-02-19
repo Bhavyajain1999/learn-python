@@ -1590,3 +1590,669 @@ print(s_copy)
 
 These methods are commonly used in Pandas Series for various data manipulation and analysis tasks. Each method serves a specific purpose and can be utilized to efficiently handle and process Series data.
 
+Certainly! In Pandas, you can create a DataFrame using lists by passing the lists as data to the `pd.DataFrame()` constructor. Each list represents a column in the DataFrame. Here's how you can create a DataFrame using lists with examples:
+
+### Example 1: Creating DataFrame from Lists of Equal Length
+
+In this example, we'll create a DataFrame with three columns: 'Name', 'Age', and 'City'.
+
+```python
+import pandas as pd
+
+# Create lists for data
+names = ['Alice', 'Bob', 'Charlie']
+ages = [25, 30, 35]
+cities = ['New York', 'Los Angeles', 'Chicago']
+
+# Create DataFrame from lists
+df = pd.DataFrame({'Name': names, 'Age': ages, 'City': cities})
+
+# Display the DataFrame
+print(df)
+```
+
+Output:
+```
+      Name  Age         City
+0    Alice   25     New York
+1      Bob   30  Los Angeles
+2  Charlie   35      Chicago
+```
+
+### Example 2: Creating DataFrame from Lists of Unequal Length
+
+You can create a DataFrame even if the lists have unequal lengths. Missing values will be filled with `NaN`.
+
+```python
+# Create lists with unequal lengths
+names = ['Alice', 'Bob', 'Charlie']
+ages = [25, 30]
+cities = ['New York', 'Los Angeles', 'Chicago', 'Houston']
+
+# Create DataFrame from lists
+df = pd.DataFrame({'Name': names, 'Age': ages, 'City': cities})
+
+# Display the DataFrame
+print(df)
+```
+
+Output:
+```
+      Name   Age         City
+0    Alice  25.0     New York
+1      Bob  30.0  Los Angeles
+2  Charlie   NaN      Chicago
+3      NaN   NaN      Houston
+```
+
+### Example 3: Creating DataFrame with Index
+
+You can specify custom index labels for the DataFrame.
+
+```python
+# Create DataFrame with custom index labels
+df = pd.DataFrame({'Name': names, 'Age': ages, 'City': cities}, index=['A', 'B', 'C'])
+
+# Display the DataFrame
+print(df)
+```
+
+Output:
+```
+      Name  Age         City
+A    Alice   25     New York
+B      Bob   30  Los Angeles
+C  Charlie   35      Chicago
+```
+
+### Conclusion:
+
+Creating a DataFrame from lists is a straightforward process in Pandas. You can pass the lists directly to the `pd.DataFrame()` constructor, and each list will correspond to a column in the DataFrame. You can also specify custom index labels if needed. This method is useful for quickly creating DataFrame objects from existing data in a tabular format.
+
+Certainly! I'll explain each DataFrame attribute and method you mentioned with examples:
+
+### 1. `shape`:
+The `shape` attribute returns a tuple representing the dimensions (rows, columns) of the DataFrame.
+
+```python
+import pandas as pd
+
+# Create a DataFrame
+df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+
+# Get the shape of the DataFrame
+print("Shape of DataFrame:", df.shape)
+```
+
+### 2. `dtypes`:
+The `dtypes` attribute returns the data types of each column in the DataFrame.
+
+```python
+# Get the data types of columns
+print("Data types of columns:", df.dtypes)
+```
+
+### 3. `index`:
+The `index` attribute returns the index labels of the DataFrame.
+
+```python
+# Get the index labels
+print("Index labels:", df.index)
+```
+
+### 4. `columns`:
+The `columns` attribute returns the column names of the DataFrame.
+
+```python
+# Get the column names
+print("Column names:", df.columns)
+```
+
+### 5. `values`:
+The `values` attribute returns a NumPy array representing the values in the DataFrame.
+
+```python
+# Get the values as a NumPy array
+print("Values in DataFrame:", df.values)
+```
+
+### 6. `head()`:
+The `head()` method returns the first few rows of the DataFrame.
+
+```python
+# Get the first 2 rows of the DataFrame
+print("First few rows:\n", df.head(2))
+```
+
+### 7. `tail()`:
+The `tail()` method returns the last few rows of the DataFrame.
+
+```python
+# Get the last 2 rows of the DataFrame
+print("Last few rows:\n", df.tail(2))
+```
+
+### 8. `sample()`:
+The `sample()` method returns a random sample of rows from the DataFrame.
+
+```python
+# Get a random sample of 2 rows from the DataFrame
+print("Random sample:\n", df.sample(2))
+```
+
+### 9. `info()`:
+The `info()` method provides a concise summary of the DataFrame, including column data types and non-null counts.
+
+```python
+# Get information about the DataFrame
+print("DataFrame info:")
+df.info()
+```
+
+### 10. `describe()`:
+The `describe()` method provides summary statistics for numerical columns in the DataFrame.
+
+```python
+# Get summary statistics for numerical columns
+print("Summary statistics:\n", df.describe())
+```
+
+### 11. `isnull()`:
+The `isnull()` method returns a DataFrame of the same shape as the original, indicating True for missing values (NaN) and False for non-missing values.
+
+### 12. `duplicated()`:
+The `duplicated()` method returns a boolean Series indicating duplicate rows.
+
+### 13. `rename()`:
+The `rename()` method is used to rename index or column labels.
+
+```python
+# Rename columns
+df_renamed = df.rename(columns={'A': 'Column_A', 'B': 'Column_B'})
+
+# Rename index
+df_renamed_index = df.rename(index={0: 'Row_1', 1: 'Row_2', 2: 'Row_3'})
+```
+
+These DataFrame attributes and methods are essential for exploring, analyzing, and manipulating data in Pandas. Each attribute and method provides valuable information and functionalities to work effectively with DataFrame objects.
+
+The `isnull()` and `duplicated()` methods are useful functions in Pandas for checking for missing values and duplicate rows in a DataFrame, respectively. Here's how you can use each of them:
+
+### 1. `isnull()` Method:
+
+The `isnull()` method returns a DataFrame of the same shape as the original DataFrame, where each element is either True (indicating a missing value) or False (indicating a non-missing value).
+
+```python
+import pandas as pd
+
+# Create a DataFrame with missing values
+data = {'A': [1, 2, None, 4, None],
+        'B': [None, 5, 6, None, 8]}
+df = pd.DataFrame(data)
+
+# Check for missing values
+missing_values = df.isnull()
+print("DataFrame with missing values:\n", missing_values)
+```
+
+Output:
+```
+DataFrame with missing values:
+        A      B
+0  False   True
+1  False  False
+2   True  False
+3  False   True
+4   True  False
+```
+
+### 2. `duplicated()` Method:
+
+The `duplicated()` method returns a boolean Series indicating whether each row is a duplicate (True) or not (False).
+
+```python
+# Create a DataFrame with duplicate rows
+data = {'A': [1, 2, 2, 4, 5],
+        'B': [6, 7, 8, 9, 10]}
+df = pd.DataFrame(data)
+
+# Check for duplicate rows
+duplicates = df.duplicated()
+print("Duplicate rows:\n", duplicates)
+```
+
+Output:
+```
+Duplicate rows:
+ 0    False
+1    False
+2     True
+3    False
+4    False
+dtype: bool
+```
+
+In the above example, row 2 is considered a duplicate because it is identical to row 1.
+
+### Conclusion:
+
+The `isnull()` method is useful for identifying missing values in a DataFrame, while the `duplicated()` method helps in detecting duplicate rows. These methods are valuable for data cleaning and preprocessing tasks in data analysis and manipulation workflows.
+
+In Pandas, the `sum()` method is used to compute the sum of values along a specified axis in a DataFrame. By default, it computes the sum of each column (axis 0). You can also specify the axis parameter to compute the sum along rows (axis 1). Here's how you can use the `sum()` method in a DataFrame:
+
+### Example: Computing Sum of Columns
+
+```python
+import pandas as pd
+
+# Create a DataFrame
+data = {'A': [1, 2, 3],
+        'B': [4, 5, 6],
+        'C': [7, 8, 9]}
+df = pd.DataFrame(data)
+
+# Compute the sum of each column
+column_sums = df.sum()
+print("Sum of each column:\n", column_sums)
+```
+
+Output:
+```
+Sum of each column:
+ A     6
+B    15
+C    24
+dtype: int64
+```
+
+### Example: Computing Sum of Rows
+
+```python
+# Compute the sum of values in each row
+row_sums = df.sum(axis=1)
+print("Sum of values in each row:\n", row_sums)
+```
+
+Output:
+```
+Sum of values in each row:
+ 0     12
+1     15
+2     18
+dtype: int64
+```
+
+In this example, the sum of values in each row is computed by setting the `axis` parameter to 1. 
+
+### Conclusion:
+
+The `sum()` method is a powerful tool for calculating the sum of values in a DataFrame along specified axes. It's useful for various data analysis tasks such as computing total values, aggregating data, and generating summary statistics.
+
+Certainly! Pandas DataFrames offer a variety of mathematical methods for analyzing data. Here are some commonly used ones along with brief explanations and examples:
+
+### 1. `mean()`:
+Computes the mean of values in a DataFrame.
+
+```python
+import pandas as pd
+
+# Create a DataFrame
+data = {'A': [1, 2, 3],
+        'B': [4, 5, 6],
+        'C': [7, 8, 9]}
+df = pd.DataFrame(data)
+
+# Compute mean of each column
+column_means = df.mean()
+print("Mean of each column:\n", column_means)
+```
+
+### 2. `median()`:
+Computes the median of values in a DataFrame.
+
+```python
+# Compute median of each column
+column_medians = df.median()
+print("Median of each column:\n", column_medians)
+```
+
+### 3. `mode()`:
+Computes the mode of values in a DataFrame.
+
+```python
+# Create a DataFrame with duplicate values
+data = {'A': [1, 2, 2],
+        'B': [4, 5, 6],
+        'C': [7, 8, 9]}
+df = pd.DataFrame(data)
+
+# Compute mode of each column
+column_modes = df.mode().iloc[0]  # Handle multiple modes by selecting the first one
+print("Mode of each column:\n", column_modes)
+```
+
+### 4. `sum()`:
+Computes the sum of values in a DataFrame.
+
+```python
+# Compute sum of each column
+column_sums = df.sum()
+print("Sum of each column:\n", column_sums)
+```
+
+### 5. `std()`:
+Computes the standard deviation of values in a DataFrame.
+
+```python
+# Compute standard deviation of each column
+column_stds = df.std()
+print("Standard deviation of each column:\n", column_stds)
+```
+
+### 6. `var()`:
+Computes the variance of values in a DataFrame.
+
+```python
+# Compute variance of each column
+column_vars = df.var()
+print("Variance of each column:\n", column_vars)
+```
+
+### 7. `min()` and `max()`:
+Computes the minimum and maximum values in a DataFrame.
+
+```python
+# Compute minimum and maximum of each column
+column_mins = df.min()
+column_maxs = df.max()
+print("Minimum of each column:\n", column_mins)
+print("Maximum of each column:\n", column_maxs)
+```
+
+### 8. `quantile()`:
+Computes sample quantiles of values in a DataFrame.
+
+```python
+# Compute the 25th and 75th percentile (quantiles) of each column
+column_quantiles = df.quantile([0.25, 0.75])
+print("Quantiles (25th and 75th percentile) of each column:\n", column_quantiles)
+```
+
+### Conclusion:
+
+These are just a few of the mathematical methods available in Pandas DataFrames. They provide essential functionality for analyzing and summarizing data, allowing you to gain insights into the distribution and characteristics of your data.
+
+
+To select a single column in a DataFrame, you can use square brackets `[]` with the column name enclosed in quotes. Here's how you can do it:
+
+```python
+import pandas as pd
+
+# Create a DataFrame
+data = {'A': [1, 2, 3],
+        'B': [4, 5, 6],
+        'C': [7, 8, 9]}
+df = pd.DataFrame(data)
+
+# Select a single column
+column_A = df['A']
+print("Column A:\n", column_A)
+```
+
+Output:
+```
+Column A:
+ 0    1
+1    2
+2    3
+Name: A, dtype: int64
+```
+
+You can also use dot notation to select a single column if the column name is a valid Python identifier and doesn't conflict with DataFrame methods.
+
+```python
+# Select a single column using dot notation
+column_A = df.A
+print("Column A:\n", column_A)
+```
+
+Output:
+```
+Column A:
+ 0    1
+1    2
+2    3
+Name: A, dtype: int64
+```
+
+Both methods will return a Pandas Series containing the values of the selected column.
+
+To select multiple columns in a DataFrame, you can pass a list of column names within square brackets `[]`. Here's how you can do it:
+
+```python
+import pandas as pd
+
+# Create a DataFrame
+data = {'A': [1, 2, 3],
+        'B': [4, 5, 6],
+        'C': [7, 8, 9]}
+df = pd.DataFrame(data)
+
+# Select multiple columns
+columns_AB = df[['A', 'B']]
+print("Columns A and B:\n", columns_AB)
+```
+
+Output:
+```
+Columns A and B:
+    A  B
+0  1  4
+1  2  5
+2  3  6
+```
+
+You can also use the dot notation to select multiple columns, but it's less flexible and not recommended for multiple columns.
+
+```python
+# Select multiple columns using dot notation (less recommended)
+columns_AB = df.AB  # This will raise an AttributeError because 'AB' is not a single column
+```
+
+When selecting multiple columns, the resulting object will be a DataFrame containing only the selected columns. Each column will retain its original order.
+
+To select rows from a DataFrame, you can use various methods like `.loc[]`, `.iloc[]`, and boolean indexing. Here's how you can select single and multiple rows using these methods:
+
+### 1. Selecting Single Row:
+
+You can use `.loc[]` or `.iloc[]` to select a single row based on the index label or position, respectively.
+
+```python
+import pandas as pd
+
+# Create a DataFrame
+data = {'A': [1, 2, 3],
+        'B': [4, 5, 6],
+        'C': [7, 8, 9]}
+df = pd.DataFrame(data, index=['X', 'Y', 'Z'])
+
+# Select a single row using index label
+row_Y_loc = df.loc['Y']
+print("Single row using .loc:\n", row_Y_loc)
+
+# Select a single row using row position
+row_1_iloc = df.iloc[1]
+print("Single row using .iloc:\n", row_1_iloc)
+```
+
+### 2. Selecting Multiple Rows:
+
+You can use slicing with `.loc[]`, `.iloc[]`, or boolean indexing to select multiple rows.
+
+```python
+# Select multiple rows using slicing and .loc
+rows_YZ_loc = df.loc['Y':'Z']
+print("Multiple rows using slicing and .loc:\n", rows_YZ_loc)
+
+# Select multiple rows using slicing and .iloc
+rows_1_2_iloc = df.iloc[1:3]
+print("Multiple rows using slicing and .iloc:\n", rows_1_2_iloc)
+
+# Select multiple rows using boolean indexing
+rows_even_index = df[df.index % 2 == 0]
+print("Multiple rows using boolean indexing:\n", rows_even_index)
+```
+
+### Output:
+```
+Single row using .loc:
+ A    2
+B    5
+C    8
+Name: Y, dtype: int64
+
+Single row using .iloc:
+ A    2
+B    5
+C    8
+Name: Y, dtype: int64
+
+Multiple rows using slicing and .loc:
+    A  B  C
+Y  2  5  8
+Z  3  6  9
+
+Multiple rows using slicing and .iloc:
+    A  B  C
+Y  2  5  8
+Z  3  6  9
+
+Multiple rows using boolean indexing:
+    A  B  C
+X  1  4  7
+Z  3  6  9
+```
+
+### Conclusion:
+These methods provide flexibility in selecting single or multiple rows from a DataFrame based on index labels, positions, or boolean conditions. Choose the method that best suits your requirements.
+
+To add a new column to a DataFrame in Pandas, you can simply assign values to a new column name. Here's how you can do it:
+
+```python
+import pandas as pd
+
+# Create a DataFrame
+data = {'A': [1, 2, 3],
+        'B': [4, 5, 6]}
+df = pd.DataFrame(data)
+
+# Add a new column 'C' with values
+df['C'] = [7, 8, 9]
+
+# Display the DataFrame
+print(df)
+```
+
+Output:
+```
+   A  B  C
+0  1  4  7
+1  2  5  8
+2  3  6  9
+```
+
+In this example, we added a new column 'C' to the DataFrame `df` and assigned values `[7, 8, 9]` to it.
+
+You can also add a new column based on existing columns or perform computations on them:
+
+```python
+# Add a new column 'D' based on values in columns 'A' and 'B'
+df['D'] = df['A'] + df['B']
+
+# Display the DataFrame
+print(df)
+```
+
+Output:
+```
+   A  B  C   D
+0  1  4  7   5
+1  2  5  8   7
+2  3  6  9   9
+```
+
+Here, we added a new column 'D' to the DataFrame `df` based on the sum of values in columns 'A' and 'B'.
+
+Adding new columns to a DataFrame is straightforward and flexible, allowing you to customize your data analysis and manipulation workflows according to your requirements.
+
+Certainly! Here's how you can use `astype()`, `value_counts()`, and `in` operator with Pandas DataFrame:
+
+### 1. `astype()` Method:
+
+The `astype()` method is used to cast the values of a DataFrame to a specified data type.
+
+```python
+import pandas as pd
+
+# Create a DataFrame
+data = {'A': ['1', '2', '3'],
+        'B': ['4', '5', '6']}
+df = pd.DataFrame(data)
+
+# Convert columns 'A' and 'B' to integers
+df[['A', 'B']] = df[['A', 'B']].astype(int)
+
+# Display the DataFrame with updated data types
+print(df.dtypes)
+```
+
+Output:
+```
+A    int64
+B    int64
+dtype: object
+```
+
+### 2. `value_counts()` Method:
+
+The `value_counts()` method returns a Series containing counts of unique values in a column.
+
+```python
+# Count occurrences of each unique value in column 'A'
+value_counts_A = df['A'].value_counts()
+print("Value counts for column 'A':\n", value_counts_A)
+```
+
+Output:
+```
+Value counts for column 'A':
+ 3    1
+2    1
+1    1
+Name: A, dtype: int64
+```
+
+### 3. Using `in` Operator:
+
+You can use the `in` operator to check if a value is present in a DataFrame column.
+
+```python
+# Check if a value exists in column 'A'
+value_exists = 2 in df['A']
+print("Value 2 exists in column 'A':", value_exists)
+```
+
+Output:
+```
+Value 2 exists in column 'A': True
+```
+
+### Conclusion:
+
+These are some useful operations you can perform with Pandas DataFrame:
+
+- `astype()` for data type conversion.
+- `value_counts()` for counting unique values in a column.
+- Using the `in` operator to check if a value exists in a column.
+
+These operations are essential for data preprocessing, analysis, and manipulation tasks.
