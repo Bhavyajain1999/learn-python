@@ -12,7 +12,7 @@ def home():
 
 @app.route('/welcome')
 def welcome():
-    return "Welcome to the Flask Tutorials"
+    return "Welcome to the Flask "
 
 @app.route('/index')
 def index():
