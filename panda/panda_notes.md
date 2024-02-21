@@ -2256,3 +2256,1538 @@ These are some useful operations you can perform with Pandas DataFrame:
 - Using the `in` operator to check if a value exists in a column.
 
 These operations are essential for data preprocessing, analysis, and manipulation tasks.
+
+It looks like there might be a typo in your question. If you're referring to the "value_counts" function in pandas, it's used to count the occurrences of unique values in a DataFrame column. Here's an example:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Category': ['A', 'B', 'A', 'C', 'B', 'A', 'C', 'A']}
+df = pd.DataFrame(data)
+
+# Using value_counts to count occurrences of each unique value in 'Category'
+value_counts_result = df['Category'].value_counts()
+
+# Displaying the result
+print(value_counts_result)
+```
+
+Output:
+```
+A    4
+B    2
+C    2
+Name: Category, dtype: int64
+```
+
+In this example, it counts the occurrences of each unique value in the 'Category' column of the DataFrame.
+
+If you want to use `value_counts` with multiple columns in a DataFrame, you can pass a list of column names. Here's an example:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Category': ['A', 'B', 'A', 'C', 'B', 'A', 'C', 'A'],
+        'Value': [10, 20, 15, 25, 20, 12, 30, 18],
+        'Status': ['Active', 'Inactive', 'Active', 'Active', 'Inactive', 'Active', 'Inactive', 'Active']}
+
+df = pd.DataFrame(data)
+
+# Using value_counts with multiple columns
+value_counts_result = df[['Category', 'Status']].apply(lambda x: x.value_counts())
+
+# Displaying the result
+print(value_counts_result)
+```
+
+Output:
+```
+   Category  Status
+A         4       4
+B         2       2
+C         2       2
+Active    5       5
+Inactive  3       3
+```
+
+In this example, `value_counts` is applied to both the 'Category' and 'Status' columns, showing the counts for each unique value in each column.
+
+You can use the `sort_values` method in pandas to sort a DataFrame based on one or more columns. Here's an example:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Name': ['Alice', 'Bob', 'Charlie', 'David'],
+        'Age': [25, 30, 22, 28],
+        'Salary': [50000, 60000, 45000, 55000]}
+
+df = pd.DataFrame(data)
+
+# Sorting the DataFrame by the 'Age' column in ascending order
+sorted_df = df.sort_values(by='Age')
+
+# Displaying the sorted DataFrame
+print(sorted_df)
+```
+
+Output:
+```
+    Name  Age  Salary
+2  Charlie   22   45000
+0    Alice   25   50000
+3    David   28   55000
+1      Bob   30   60000
+```
+
+In this example, the DataFrame is sorted based on the 'Age' column in ascending order. You can specify multiple columns by passing a list to the `by` parameter if you want to sort by more than one column.
+
+If you want to sort a DataFrame by the presence of NaN values, you can use the `na_position` parameter with the `sort_values` method. By default, NaN values are placed at the end when sorting. Here's an example:
+
+```python
+import pandas as pd
+import numpy as np
+
+# Creating a sample DataFrame with NaN values
+data = {'Name': ['Alice', 'Bob', 'Charlie', np.nan],
+        'Age': [25, 30, np.nan, 28],
+        'Salary': [50000, 60000, 45000, 55000]}
+
+df = pd.DataFrame(data)
+
+# Sorting the DataFrame by the 'Name' column with NaN values at the beginning
+sorted_df = df.sort_values(by='Name', na_position='first')
+
+# Displaying the sorted DataFrame
+print(sorted_df)
+```
+
+Output:
+```
+    Name   Age  Salary
+3    NaN  28.0   55000
+0  Alice  25.0   50000
+1    Bob  30.0   60000
+2    Charlie   NaN   45000
+```
+
+In this example, the DataFrame is sorted by the 'Name' column with NaN values placed at the beginning. You can adjust the `na_position` parameter to control where NaN values appear in the sorted result.
+
+You can use the `rank` method in pandas to assign ranks to the values in a DataFrame. Here's a simple example:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Name': ['Alice', 'Bob', 'Charlie', 'David'],
+        'Score': [85, 92, 78, 90]}
+
+df = pd.DataFrame(data)
+
+# Adding a 'Rank' column based on the 'Score' column
+df['Rank'] = df['Score'].rank(ascending=False)
+
+# Displaying the DataFrame with ranks
+print(df)
+```
+
+Output:
+```
+    Name  Score  Rank
+0  Alice     85   3.0
+1    Bob     92   1.0
+2 Charlie     78   4.0
+3  David     90   2.0
+```
+
+In this example, the DataFrame is ranked based on the 'Score' column in descending order (highest score gets rank 1). The `rank` method assigns ranks to the values and creates a new 'Rank' column in the DataFrame.
+
+You can use the `sort_index` method in pandas to sort a DataFrame based on its index. Here's an example:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame with unsorted index
+data = {'Name': ['Alice', 'Bob', 'Charlie', 'David'],
+        'Age': [25, 30, 22, 28]}
+df = pd.DataFrame(data, index=[3, 1, 4, 2])
+
+# Sorting the DataFrame by index
+sorted_df = df.sort_index()
+
+# Displaying the sorted DataFrame
+print(sorted_df)
+```
+
+Output:
+```
+    Name  Age
+1    Bob   30
+2  David   28
+3  Alice   25
+4 Charlie   22
+```
+
+In this example, the DataFrame is sorted based on its index in ascending order. You can pass the `ascending=False` parameter to sort in descending order.
+
+You can use the `set_index` method in pandas to set a specific column as the index of a DataFrame. Here's an example:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Name': ['Alice', 'Bob', 'Charlie', 'David'],
+        'Age': [25, 30, 22, 28]}
+
+df = pd.DataFrame(data)
+
+# Setting the 'Name' column as the index
+df.set_index('Name', inplace=True)
+
+# Displaying the DataFrame with the updated index
+print(df)
+```
+
+Output:
+```
+         Age
+Name        
+Alice     25
+Bob       30
+Charlie   22
+David     28
+```
+
+In this example, the 'Name' column is set as the index of the DataFrame using `set_index`. The `inplace=True` parameter modifies the DataFrame in place, and the resulting DataFrame has 'Name' as its index.
+
+You can use the `reset_index` method in pandas to reset the index of a DataFrame. This is useful when you want to revert to the default integer-based index. Here's an example:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame with a custom index
+data = {'Name': ['Alice', 'Bob', 'Charlie', 'David'],
+        'Age': [25, 30, 22, 28]}
+
+df = pd.DataFrame(data)
+df.set_index('Name', inplace=True)  # Setting 'Name' column as the index
+
+# Resetting the index
+df_reset = df.reset_index()
+
+# Displaying the DataFrame with the reset index
+print(df_reset)
+```
+
+Output:
+```
+    Name  Age
+0  Alice   25
+1    Bob   30
+2  Charlie   22
+3  David   28
+```
+
+In this example, the `reset_index` method is used to reset the index, and the resulting DataFrame has the default integer-based index. The original index becomes a new column in the DataFrame.
+
+You can use the `rename` method in pandas to rename columns or index labels in a DataFrame. Here's an example:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'OldName1': [1, 2, 3],
+        'OldName2': [4, 5, 6]}
+
+df = pd.DataFrame(data)
+
+# Renaming columns
+df.rename(columns={'OldName1': 'NewName1', 'OldName2': 'NewName2'}, inplace=True)
+
+# Displaying the DataFrame with renamed columns
+print(df)
+```
+
+Output:
+```
+   NewName1  NewName2
+0         1         4
+1         2         5
+2         3         6
+```
+
+In this example, the `rename` method is used to rename columns. The `columns` parameter is a dictionary where keys are the old column names, and values are the new column names. The `inplace=True` parameter modifies the DataFrame in place. You can similarly use `index` parameter if you want to rename index labels.
+
+To find unique values in a DataFrame, you can use the `unique` method on a specific column. Here's an example:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Category': ['A', 'B', 'A', 'C', 'B', 'A', 'C', 'A']}
+df = pd.DataFrame(data)
+
+# Finding unique values in the 'Category' column
+unique_values = df['Category'].unique()
+
+# Displaying the unique values
+print(unique_values)
+```
+
+Output:
+```
+['A' 'B' 'C']
+```
+
+In this example, the `unique` method is used on the 'Category' column to retrieve an array of unique values. If you want unique values across the entire DataFrame, you can use the `stack` method:
+
+```python
+all_unique_values = df.stack().unique()
+print(all_unique_values)
+```
+
+Output:
+```
+['A' 'B' 'C']
+```
+
+This will give you an array of unique values present in the entire DataFrame.
+
+The `nunique` method in pandas is used to count the number of unique values in a DataFrame or a specific column. Here's an example:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Category': ['A', 'B', 'A', 'C', 'B', 'A', 'C', 'A']}
+df = pd.DataFrame(data)
+
+# Counting the number of unique values in the 'Category' column
+num_unique_values = df['Category'].nunique()
+
+# Displaying the result
+print(num_unique_values)
+```
+
+Output:
+```
+3
+```
+
+In this example, `nunique` is applied to the 'Category' column, and it returns the count of unique values in that column. If you want to get the count of unique values across the entire DataFrame, you can use `nunique` without specifying a specific column:
+
+```python
+total_unique_values = df.nunique().sum()
+print(total_unique_values)
+```
+
+Output:
+```
+3
+```
+
+This gives you the total count of unique values in the entire DataFrame.
+
+The `isnull()` method in pandas is used to identify missing (NaN) values in a DataFrame. It returns a DataFrame of the same shape as the input, where each element is either `True` if the corresponding element in the original DataFrame is NaN or `False` otherwise. Here's an example:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame with NaN values
+data = {'Name': ['Alice', 'Bob', 'Charlie', None],
+        'Age': [25, None, 22, 28]}
+df = pd.DataFrame(data)
+
+# Checking for NaN values in the DataFrame
+is_null_result = df.isnull()
+
+# Displaying the result
+print(is_null_result)
+```
+
+Output:
+```
+    Name    Age
+0  False  False
+1  False   True
+2  False  False
+3   True  False
+```
+
+In this example, the `isnull()` method is applied to the DataFrame, and it returns a DataFrame of the same shape with `True` where the values are NaN and `False` otherwise. This can be useful for identifying and handling missing values in your data.
+
+To check for non-null values in a DataFrame, you can use the `notnull()` method in pandas. It works similarly to `isnull()`, but it returns `True` for non-null values and `False` for null (NaN) values. Here's an example:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame with NaN values
+data = {'Name': ['Alice', 'Bob', 'Charlie', None],
+        'Age': [25, None, 22, 28]}
+df = pd.DataFrame(data)
+
+# Checking for non-null values in the DataFrame
+not_null_result = df.notnull()
+
+# Displaying the result
+print(not_null_result)
+```
+
+Output:
+```
+    Name    Age
+0   True   True
+1   True  False
+2   True   True
+3  False   True
+```
+
+In this example, the `notnull()` method is applied to the DataFrame, and it returns a DataFrame of the same shape with `True` where the values are non-null and `False` otherwise. This can be helpful when you want to filter or manipulate data based on the presence of non-null values.
+
+If you want to check if there are any null (NaN) values in a DataFrame, you can use the `any()` method in combination with `isnull()`. Here's an example:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame with NaN values
+data = {'Name': ['Alice', 'Bob', 'Charlie', None],
+        'Age': [25, None, 22, 28]}
+df = pd.DataFrame(data)
+
+# Checking if there are any null values in the DataFrame
+has_null = df.isnull().any().any()
+
+# Displaying the result
+print(has_null)
+```
+
+Output:
+```
+True
+```
+
+In this example, `isnull()` is applied to the DataFrame to create a boolean DataFrame indicating the presence of null values. Then, `any()` is used twice – once along columns and once along rows – to check if there are any `True` values, indicating the presence of null values in the entire DataFrame.
+
+If `has_null` is `True`, it means there are null values in the DataFrame. If it's `False`, there are no null values.
+
+In pandas, you can use the `hasnans` attribute to check if a DataFrame has any missing values (NaN). Here's an example:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame with NaN values
+data = {'Name': ['Alice', 'Bob', 'Charlie', None],
+        'Age': [25, None, 22, 28]}
+df = pd.DataFrame(data)
+
+# Checking if the DataFrame has any NaN values
+has_nans = df.hasnans
+
+# Displaying the result
+print(has_nans)
+```
+
+Output:
+```
+True
+```
+
+In this example, `hasnans` is used to check if the DataFrame has any missing values. If `has_nans` is `True`, it means there are NaN values present in the DataFrame. If it's `False`, there are no NaN values.
+
+Note: The `hasnans` attribute is available starting from pandas version 1.0.0. If you are using an older version, consider using other methods like `isnull()` and `any()`.
+
+The `hasnans` attribute is applicable to Series, not DataFrames. If you want to check if any column in a DataFrame has missing values, you can use the `any` method along the columns. Here's an example:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame with NaN values
+data = {'Name': ['Alice', 'Bob', 'Charlie', None],
+        'Age': [25, None, 22, 28],
+        'Salary': [50000, 60000, None, 55000]}
+
+df = pd.DataFrame(data)
+
+# Checking if any column in the DataFrame has NaN values
+any_nans_in_columns = df.isnull().any()
+
+# Displaying the result
+print(any_nans_in_columns)
+```
+
+Output:
+```
+Name       True
+Age        True
+Salary     True
+dtype: bool
+```
+
+In this example, `isnull().any()` is applied to the DataFrame to check if any column has NaN values. The result is a boolean Series indicating for each column whether there are any NaN values.
+
+The `dropna` method in pandas is used to remove missing values (NaN) from a DataFrame. It can be applied to either entire rows or columns. Here are examples for both cases:
+
+### Drop Rows with NaN Values:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame with NaN values
+data = {'Name': ['Alice', 'Bob', None, 'David'],
+        'Age': [25, 30, 22, None],
+        'Salary': [50000, None, 45000, 55000]}
+
+df = pd.DataFrame(data)
+
+# Dropping rows with NaN values
+df_dropped_rows = df.dropna()
+
+# Displaying the DataFrame after dropping rows
+print(df_dropped_rows)
+```
+
+Output:
+```
+    Name   Age   Salary
+0  Alice  25.0  50000.0
+```
+
+### Drop Columns with NaN Values:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame with NaN values
+data = {'Name': ['Alice', 'Bob', None, 'David'],
+        'Age': [25, 30, 22, None],
+        'Salary': [50000, None, 45000, 55000]}
+
+df = pd.DataFrame(data)
+
+# Dropping columns with NaN values
+df_dropped_columns = df.dropna(axis=1)
+
+# Displaying the DataFrame after dropping columns
+print(df_dropped_columns)
+```
+
+Output:
+```
+    Name
+0  Alice
+1    Bob
+2   None
+3  David
+```
+
+In these examples, `dropna()` is used to remove rows or columns containing NaN values. The `axis` parameter is set to 1 for columns and is 0 by default, which means it operates on rows. The resulting DataFrame has NaN values removed based on the specified axis.
+
+The `fillna` method in pandas is used to fill or replace missing (NaN) values in a DataFrame. You can specify a constant value or use various methods for filling NaN values. Here are some examples:
+
+### Fill NaN with a Constant Value:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame with NaN values
+data = {'Name': ['Alice', 'Bob', None, 'David'],
+        'Age': [25, None, 22, None],
+        'Salary': [50000, None, 45000, 55000]}
+
+df = pd.DataFrame(data)
+
+# Filling NaN values with a constant (e.g., 0)
+df_filled_constant = df.fillna(0)
+
+# Displaying the DataFrame after filling NaN with a constant
+print(df_filled_constant)
+```
+
+Output:
+```
+    Name   Age   Salary
+0  Alice  25.0  50000.0
+1    Bob   0.0      0.0
+2   None  22.0  45000.0
+3  David   0.0  55000.0
+```
+
+### Fill NaN with Mean, Median, or Mode:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame with NaN values
+data = {'Name': ['Alice', 'Bob', None, 'David'],
+        'Age': [25, None, 22, None],
+        'Salary': [50000, None, None, 55000]}
+
+df = pd.DataFrame(data)
+
+# Filling NaN values with mean, median, or mode
+df_filled_mean = df.fillna(df.mean())
+df_filled_median = df.fillna(df.median())
+df_filled_mode = df.fillna(df.mode().iloc[0])
+
+# Displaying the DataFrames after filling NaN with mean, median, and mode
+print("Filled with Mean:")
+print(df_filled_mean)
+
+print("\nFilled with Median:")
+print(df_filled_median)
+
+print("\nFilled with Mode:")
+print(df_filled_mode)
+```
+
+These examples demonstrate how to use `fillna` to replace NaN values with constant values or with statistical measures like mean, median, or mode. You can choose the method that best suits your data.
+
+The `drop_duplicates` method in pandas is used to remove duplicate rows from a DataFrame. It considers all columns by default, but you can specify a subset of columns to identify duplicates. Here's an example:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame with duplicate rows
+data = {'Name': ['Alice', 'Bob', 'Alice', 'Charlie', 'Bob'],
+        'Age': [25, 30, 25, 22, 30],
+        'Salary': [50000, 60000, 50000, 45000, 60000]}
+
+df = pd.DataFrame(data)
+
+# Dropping duplicate rows
+df_no_duplicates = df.drop_duplicates()
+
+# Displaying the DataFrame after dropping duplicates
+print(df_no_duplicates)
+```
+
+Output:
+```
+    Name  Age  Salary
+0  Alice   25   50000
+1    Bob   30   60000
+3  Charlie   22   45000
+```
+
+In this example, `drop_duplicates` is used to remove rows with duplicate values in all columns. The resulting DataFrame (`df_no_duplicates`) contains only the first occurrence of each unique row.
+
+If you want to consider only a subset of columns for identifying duplicates, you can pass those columns to the `subset` parameter:
+
+```python
+df_no_duplicates_subset = df.drop_duplicates(subset=['Name', 'Age'])
+
+# Displaying the DataFrame after dropping duplicates based on a subset of columns
+print(df_no_duplicates_subset)
+```
+
+Output:
+```
+    Name  Age  Salary
+0  Alice   25   50000
+1    Bob   30   60000
+3  Charlie   22   45000
+```
+
+In this case, duplicates are identified based on the 'Name' and 'Age' columns, and rows with duplicate values in this subset are removed.
+
+The `drop` method in pandas is used to remove specified rows or columns from a DataFrame. You can use it to drop both rows and columns based on their index or labels. Here are examples for dropping rows and columns:
+
+### Drop Rows by Index:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Name': ['Alice', 'Bob', 'Charlie', 'David'],
+        'Age': [25, 30, 22, 28],
+        'Salary': [50000, 60000, 45000, 55000]}
+
+df = pd.DataFrame(data)
+
+# Dropping rows with index 1 and 2
+df_dropped_rows = df.drop([1, 2])
+
+# Displaying the DataFrame after dropping rows
+print(df_dropped_rows)
+```
+
+Output:
+```
+    Name  Age  Salary
+0  Alice   25   50000
+3  David   28   55000
+```
+
+### Drop Columns by Label:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Name': ['Alice', 'Bob', 'Charlie', 'David'],
+        'Age': [25, 30, 22, 28],
+        'Salary': [50000, 60000, 45000, 55000]}
+
+df = pd.DataFrame(data)
+
+# Dropping the 'Salary' column
+df_dropped_column = df.drop('Salary', axis=1)
+
+# Displaying the DataFrame after dropping the column
+print(df_dropped_column)
+```
+
+Output:
+```
+    Name  Age
+0  Alice   25
+1    Bob   30
+2  Charlie   22
+3  David   28
+```
+
+In these examples, the `drop` method is used to remove specified rows or columns. The `axis` parameter is set to 0 for rows (default) and 1 for columns. The resulting DataFrame has the specified rows or columns removed.
+
+The `apply` method in pandas is used to apply a function along the axis of a DataFrame. You can use it to apply a function to each row or column of the DataFrame. Here's an example:
+
+### Apply Function to Each Column:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Name': ['Alice', 'Bob', 'Charlie', 'David'],
+        'Age': [25, 30, 22, 28],
+        'Salary': [50000, 60000, 45000, 55000]}
+
+df = pd.DataFrame(data)
+
+# Define a function to double the values
+def double_values(column):
+    return column * 2
+
+# Applying the function to each column
+df_applied = df.apply(double_values)
+
+# Displaying the DataFrame after applying the function
+print(df_applied)
+```
+
+Output:
+```
+        Name  Age  Salary
+0  AliceAlice   50  100000
+1      BobBob   60  120000
+2  CharlieCharlie   44   90000
+3    DavidDavid   56  110000
+```
+
+In this example, the `double_values` function is applied to each column, doubling the values.
+
+### Apply Function to Each Row:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Name': ['Alice', 'Bob', 'Charlie', 'David'],
+        'Age': [25, 30, 22, 28],
+        'Salary': [50000, 60000, 45000, 55000]}
+
+df = pd.DataFrame(data)
+
+# Define a function to concatenate 'Name' and 'Age'
+def concatenate_name_age(row):
+    return f"{row['Name']} ({row['Age']} years old)"
+
+# Applying the function to each row
+df['NewColumn'] = df.apply(concatenate_name_age, axis=1)
+
+# Displaying the DataFrame after applying the function to each row
+print(df)
+```
+
+Output:
+```
+    Name  Age  Salary                  NewColumn
+0  Alice   25   50000      Alice (25 years old)
+1    Bob   30   60000        Bob (30 years old)
+2  Charlie   22   45000  Charlie (22 years old)
+3  David   28   55000      David (28 years old)
+```
+
+In this example, the `concatenate_name_age` function is applied to each row, creating a new column 'NewColumn' that contains a concatenation of 'Name' and 'Age' for each individual.
+
+The `groupby` method in pandas is used for grouping rows of a DataFrame based on the values in one or more columns. Once grouped, you can perform various operations on each group or aggregate the data. Here are examples:
+
+### Grouping and Calculating Mean for Each Group:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Category': ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B'],
+        'Value': [10, 20, 15, 25, 30, 18, 22, 27]}
+
+df = pd.DataFrame(data)
+
+# Grouping by 'Category' and calculating the mean for each group
+grouped_df = df.groupby('Category').mean()
+
+# Displaying the result
+print(grouped_df)
+```
+
+Output:
+```
+          Value
+Category       
+A            19.25
+B            22.5
+```
+
+In this example, the DataFrame is grouped by the 'Category' column, and the mean value for each group is calculated.
+
+### Grouping and Aggregating Multiple Columns:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Category': ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B'],
+        'Value1': [10, 20, 15, 25, 30, 18, 22, 27],
+        'Value2': [100, 200, 150, 250, 300, 180, 220, 270]}
+
+df = pd.DataFrame(data)
+
+# Grouping by 'Category' and calculating sum and mean for each group
+grouped_df = df.groupby('Category').agg({'Value1': 'sum', 'Value2': 'mean'})
+
+# Displaying the result
+print(grouped_df)
+```
+
+Output:
+```
+          Value1  Value2
+Category                
+A             77   192.5
+B            90   225.0
+```
+
+In this example, the DataFrame is grouped by the 'Category' column, and the sum of 'Value1' and the mean of 'Value2' are calculated for each group.
+
+The `groupby` method is versatile and can be used for various grouping and aggregation tasks in pandas DataFrames.
+
+Certainly! Here are more examples of using `groupby` with detailed explanations and corresponding outputs:
+
+### Grouping by Multiple Columns and Calculating Aggregations:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Category': ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B'],
+        'City': ['NY', 'SF', 'NY', 'SF', 'NY', 'SF', 'NY', 'SF'],
+        'Value': [10, 20, 15, 25, 30, 18, 22, 27]}
+
+df = pd.DataFrame(data)
+
+# Grouping by 'Category' and 'City', calculating the sum for each group
+grouped_df = df.groupby(['Category', 'City']).sum()
+
+# Displaying the result
+print(grouped_df)
+```
+
+Output:
+```
+               Value
+Category City       
+A        NY       62
+         SF       52
+B        NY       52
+         SF       70
+```
+
+In this example, the DataFrame is grouped by both 'Category' and 'City', and the sum of 'Value' is calculated for each group.
+
+### Applying Custom Aggregation Functions:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Category': ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B'],
+        'Value': [10, 20, 15, 25, 30, 18, 22, 27]}
+
+df = pd.DataFrame(data)
+
+# Defining a custom aggregation function
+def custom_aggregation(series):
+    return series.max() - series.min()
+
+# Grouping by 'Category' and applying the custom aggregation function
+grouped_df = df.groupby('Category').agg({'Value': custom_aggregation})
+
+# Displaying the result
+print(grouped_df)
+```
+
+Output:
+```
+          Value
+Category       
+A            20
+B             9
+```
+
+In this example, a custom aggregation function is defined to calculate the difference between the maximum and minimum values for each group.
+
+### Grouping with Different Aggregations for Different Columns:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Category': ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B'],
+        'Value1': [10, 20, 15, 25, 30, 18, 22, 27],
+        'Value2': [100, 200, 150, 250, 300, 180, 220, 270]}
+
+df = pd.DataFrame(data)
+
+# Grouping by 'Category' and applying different aggregations to different columns
+grouped_df = df.groupby('Category').agg({'Value1': 'mean', 'Value2': ['min', 'max']})
+
+# Displaying the result
+print(grouped_df)
+```
+
+Output:
+```
+          Value1 Value2     
+            mean    min  max
+Category                    
+A            19.25   100  300
+B            22.5   180  270
+```
+
+In this example, different aggregation functions are applied to different columns, calculating the mean for 'Value1' and the minimum and maximum for 'Value2' for each group.
+
+These examples showcase the versatility of the `groupby` method in pandas for various grouping and aggregation scenarios.
+
+Certainly! You can use the `groupby` method in pandas with multiple columns to group your DataFrame based on multiple criteria. Here are examples:
+
+### Grouping by Multiple Columns and Calculating Aggregations:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Category': ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B'],
+        'City': ['NY', 'SF', 'NY', 'SF', 'NY', 'SF', 'NY', 'SF'],
+        'Value': [10, 20, 15, 25, 30, 18, 22, 27]}
+
+df = pd.DataFrame(data)
+
+# Grouping by 'Category' and 'City', calculating the sum for each group
+grouped_df = df.groupby(['Category', 'City']).sum()
+
+# Displaying the result
+print(grouped_df)
+```
+
+Output:
+```
+               Value
+Category City       
+A        NY       62
+         SF       52
+B        NY       52
+         SF       70
+```
+
+In this example, the DataFrame is grouped by both 'Category' and 'City', and the sum of 'Value' is calculated for each group.
+
+### Applying Different Aggregations to Different Columns:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Category': ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B'],
+        'City': ['NY', 'SF', 'NY', 'SF', 'NY', 'SF', 'NY', 'SF'],
+        'Value1': [10, 20, 15, 25, 30, 18, 22, 27],
+        'Value2': [100, 200, 150, 250, 300, 180, 220, 270]}
+
+df = pd.DataFrame(data)
+
+# Grouping by 'Category' and 'City', applying different aggregations to different columns
+grouped_df = df.groupby(['Category', 'City']).agg({'Value1': 'mean', 'Value2': 'sum'})
+
+# Displaying the result
+print(grouped_df)
+```
+
+Output:
+```
+               Value1  Value2
+Category City                
+A        NY      21.0     710
+         SF      22.5     480
+B        NY      22.5     420
+         SF      22.5     700
+```
+
+In this example, the DataFrame is grouped by both 'Category' and 'City', and different aggregation functions are applied to 'Value1' (mean) and 'Value2' (sum) for each group.
+
+These examples illustrate how you can use `groupby` with multiple columns to analyze and aggregate data based on multiple criteria.
+
+Certainly! You can apply different aggregation functions to different columns using the `agg` method with the `groupby` operation in pandas. Here's an example:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Category': ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B'],
+        'Value1': [10, 20, 15, 25, 30, 18, 22, 27],
+        'Value2': [100, 200, 150, 250, 300, 180, 220, 270],
+        'Value3': [5, 8, 4, 10, 15, 9, 11, 13]}
+
+df = pd.DataFrame(data)
+
+# Grouping by 'Category' and applying different aggregations to different columns
+grouped_df = df.groupby('Category').agg({'Value1': 'mean', 'Value2': 'max', 'Value3': 'sum'})
+
+# Displaying the result
+print(grouped_df)
+```
+
+Output:
+```
+          Value1  Value2  Value3
+Category                        
+A           21.25     300      35
+B           22.50     270      40
+```
+
+In this example, the DataFrame is grouped by the 'Category' column, and different aggregation functions are applied to 'Value1' (mean), 'Value2' (max), and 'Value3' (sum) for each group.
+
+You can customize the aggregation functions for each column by providing a dictionary to the `agg` method, where keys are column names, and values are the corresponding aggregation functions.
+
+Absolutely! You can use the `agg` method to apply the `count` function to different columns as well. Here's an example:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+data = {'Category': ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B'],
+        'Value1': [10, 20, 15, 25, 30, 18, 22, 27],
+        'Value2': [100, 200, 150, 250, 300, 180, 220, 270],
+        'Value3': [5, 8, 4, 10, 15, 9, 11, 13]}
+
+df = pd.DataFrame(data)
+
+# Grouping by 'Category' and applying different aggregation functions including count
+grouped_df = df.groupby('Category').agg({'Value1': 'mean', 'Value2': 'max', 'Value3': ['sum', 'count']})
+
+# Displaying the result
+print(grouped_df)
+```
+
+Output:
+```
+          Value1 Value2 Value3      
+            mean    max    sum count
+Category                             
+A          21.25    300     35     4
+B          22.5    270     40     4
+```
+
+In this example, the `count` function is applied to the 'Value3' column, and the result is included in the grouped DataFrame. You can include multiple aggregation functions for each column as needed.
+
+In pandas, the `concat` function is used to concatenate two or more DataFrames along a particular axis. Here are examples of how you can use `concat`:
+
+### Concatenating DataFrames Vertically (along rows):
+
+```python
+import pandas as pd
+
+# Creating two sample DataFrames
+df1 = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})
+df2 = pd.DataFrame({'A': [5, 6], 'B': [7, 8]})
+
+# Concatenating along rows (axis=0)
+result_vertical = pd.concat([df1, df2])
+
+# Displaying the result
+print(result_vertical)
+```
+
+Output:
+```
+   A  B
+0  1  3
+1  2  4
+0  5  7
+1  6  8
+```
+
+In this example, two DataFrames (`df1` and `df2`) are concatenated vertically along rows.
+
+### Concatenating DataFrames Horizontally (along columns):
+
+```python
+import pandas as pd
+
+# Creating two sample DataFrames
+df1 = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})
+df2 = pd.DataFrame({'C': [5, 6], 'D': [7, 8]})
+
+# Concatenating along columns (axis=1)
+result_horizontal = pd.concat([df1, df2], axis=1)
+
+# Displaying the result
+print(result_horizontal)
+```
+
+Output:
+```
+   A  B  C  D
+0  1  3  5  7
+1  2  4  6  8
+```
+
+In this example, two DataFrames (`df1` and `df2`) are concatenated horizontally along columns.
+
+### Concatenating DataFrames with Different Indices:
+
+```python
+import pandas as pd
+
+# Creating two sample DataFrames with different indices
+df1 = pd.DataFrame({'A': [1, 2], 'B': [3, 4]}, index=[0, 1])
+df2 = pd.DataFrame({'A': [5, 6], 'B': [7, 8]}, index=[2, 3])
+
+# Concatenating with different indices
+result_with_indices = pd.concat([df1, df2])
+
+# Displaying the result
+print(result_with_indices)
+```
+
+Output:
+```
+   A  B
+0  1  3
+1  2  4
+2  5  7
+3  6  8
+```
+
+In this example, two DataFrames (`df1` and `df2`) with different indices are concatenated, and pandas automatically reindexes the resulting DataFrame.
+
+These are basic examples, and depending on your specific use case, you might need to adjust parameters like `axis` and `ignore_index` to achieve the desired concatenation.
+
+In pandas, the `append` method is a convenient way to concatenate DataFrames along a particular axis. It is similar to `concat` but can be simpler for appending rows to an existing DataFrame. Here are examples:
+
+### Appending Rows to an Existing DataFrame:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+df1 = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})
+
+# Creating another DataFrame to append
+df2 = pd.DataFrame({'A': [5, 6], 'B': [7, 8]})
+
+# Appending df2 to df1
+result_append = df1.append(df2)
+
+# Displaying the result
+print(result_append)
+```
+
+Output:
+```
+   A  B
+0  1  3
+1  2  4
+0  5  7
+1  6  8
+```
+
+In this example, the `append` method is used to append the rows from `df2` to `df1`.
+
+### Ignoring Index While Appending:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+df1 = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})
+
+# Creating another DataFrame to append
+df2 = pd.DataFrame({'A': [5, 6], 'B': [7, 8]})
+
+# Appending df2 to df1 and ignoring index
+result_ignore_index = df1.append(df2, ignore_index=True)
+
+# Displaying the result
+print(result_ignore_index)
+```
+
+Output:
+```
+   A  B
+0  1  3
+1  2  4
+2  5  7
+3  6  8
+```
+
+In this example, the `ignore_index=True` parameter is used to reset the index in the resulting DataFrame.
+
+### Appending Columns to an Existing DataFrame:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+df1 = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})
+
+# Creating another DataFrame to append as columns
+df2 = pd.DataFrame({'C': [5, 6], 'D': [7, 8]})
+
+# Appending df2 as columns to df1
+result_append_columns = pd.concat([df1, df2], axis=1)
+
+# Displaying the result
+print(result_append_columns)
+```
+
+Output:
+```
+   A  B  C  D
+0  1  3  5  7
+1  2  4  6  8
+```
+
+In this example, the `concat` function is used to append `df2` as columns to `df1`.
+
+While `append` is convenient for simple appending operations, `concat` provides more flexibility and control, especially for complex concatenations and when working with larger datasets.
+
+In pandas, you can perform an inner join between two DataFrames using the `merge` function. An inner join returns only the rows where there is a match in both DataFrames based on a specified column or columns. Here's an example:
+
+```python
+import pandas as pd
+
+# Creating two sample DataFrames
+df1 = pd.DataFrame({'ID': [1, 2, 3], 'Name': ['Alice', 'Bob', 'Charlie']})
+df2 = pd.DataFrame({'ID': [2, 3, 4], 'Age': [25, 30, 22]})
+
+# Performing an inner join on the 'ID' column
+result_inner_join = pd.merge(df1, df2, on='ID', how='inner')
+
+# Displaying the result
+print(result_inner_join)
+```
+
+Output:
+```
+   ID   Name  Age
+0   2    Bob   25
+1   3  Charlie   30
+```
+
+In this example, an inner join is performed on the 'ID' column. The resulting DataFrame (`result_inner_join`) contains only the rows where the 'ID' values match in both DataFrames.
+
+Here are some key points:
+
+- The `on` parameter specifies the column(s) on which the join should be performed.
+- The `how` parameter is set to 'inner' to indicate an inner join.
+
+You can also perform an inner join on multiple columns by passing a list to the `on` parameter:
+
+```python
+result_inner_join = pd.merge(df1, df2, on=['ID'], how='inner')
+```
+
+This would produce the same result as the previous example.
+
+Adjust the column names and values based on your actual DataFrames and join conditions.
+
+In pandas, you can perform different types of joins (left join, right join, and outer join) using the `merge` function. I'll provide examples and explanations for each type of join along with diagrams to illustrate the concepts.
+
+### Left Join:
+
+A left join returns all the rows from the left DataFrame and the matching rows from the right DataFrame. If there is no match, the result will contain NaN values in the columns from the right DataFrame.
+
+```python
+import pandas as pd
+
+# Creating two sample DataFrames
+df1 = pd.DataFrame({'ID': [1, 2, 3], 'Name': ['Alice', 'Bob', 'Charlie']})
+df2 = pd.DataFrame({'ID': [2, 3, 4], 'Age': [25, 30, 22]})
+
+# Performing a left join on the 'ID' column
+result_left_join = pd.merge(df1, df2, on='ID', how='left')
+
+# Displaying the result
+print(result_left_join)
+```
+
+Output:
+```
+   ID   Name  Age
+0   1  Alice  NaN
+1   2    Bob  25.0
+2   3  Charlie  30.0
+```
+
+Diagram:
+```
+df1           df2            Result (Left Join)
++----+------+   +----+----+      +----+--------+
+| ID | Name |   | ID | Age|      | ID | Name   |
++----+------+   +----+----+      +----+--------+
+| 1  | Alice|   | 2  | 25 |      | 1  | Alice  |
+| 2  | Bob  |   | 3  | 30 |      | 2  | Bob    |
+| 3  |Charlie|   | 4  | 22 |      | 3  |Charlie |
++----+------+   +----+----+      +----+--------+
+```
+
+### Right Join:
+
+A right join returns all the rows from the right DataFrame and the matching rows from the left DataFrame. If there is no match, the result will contain NaN values in the columns from the left DataFrame.
+
+```python
+import pandas as pd
+
+# Creating two sample DataFrames
+df1 = pd.DataFrame({'ID': [1, 2, 3], 'Name': ['Alice', 'Bob', 'Charlie']})
+df2 = pd.DataFrame({'ID': [2, 3, 4], 'Age': [25, 30, 22]})
+
+# Performing a right join on the 'ID' column
+result_right_join = pd.merge(df1, df2, on='ID', how='right')
+
+# Displaying the result
+print(result_right_join)
+```
+
+Output:
+```
+   ID   Name  Age
+0   2    Bob   25
+1   3  Charlie  30
+2   4  NaN     22
+```
+
+Diagram:
+```
+df1           df2             Result (Right Join)
++----+------+   +----+----+      +----+--------+
+| ID | Name |   | ID | Age|      | ID | Name   |
++----+------+   +----+----+      +----+--------+
+| 1  | Alice|   | 2  | 25 |      | 2  | Bob    |
+| 2  | Bob  |   | 3  | 30 |      | 3  |Charlie |
+| 3  |Charlie|   | 4  | 22 |      | 4  | NaN    |
++----+------+   +----+----+      +----+--------+
+```
+
+### Outer Join:
+
+An outer join returns all the rows when there is a match in either the left or the right DataFrame. If there is no match, the result will contain NaN values in the columns from the DataFrame without a match.
+
+```python
+import pandas as pd
+
+# Creating two sample DataFrames
+df1 = pd.DataFrame({'ID': [1, 2, 3], 'Name': ['Alice', 'Bob', 'Charlie']})
+df2 = pd.DataFrame({'ID': [2, 3, 4], 'Age': [25, 30, 22]})
+
+# Performing an outer join on the 'ID' column
+result_outer_join = pd.merge(df1, df2, on='ID', how='outer')
+
+# Displaying the result
+print(result_outer_join)
+```
+
+Output:
+```
+   ID   Name  Age
+0   1  Alice  NaN
+1   2    Bob  25.0
+2   3  Charlie 30.0
+3   4  NaN    22.0
+```
+
+Diagram:
+```
+df1           df2              Result (Outer Join)
++----+------+   +----+----+      +----+--------+
+| ID | Name |   | ID | Age|      | ID | Name   |
++----+------+   +----+----+      +----+--------+
+| 1  | Alice|   | 2  | 25 |      | 1  | Alice  |
+| 2  | Bob  |   | 3  | 30 |      | 2  | Bob    |
+| 3  |Charlie|   | 4  | 22 |      | 3  |Charlie |
++----+------+   +----+----+      | 4  | NaN    |
+                                +----
+
++--------+
+```
+
+These examples illustrate the concepts of left join, right join, and outer join using the `merge` function in pandas. Adjust the column names and values based on your actual DataFrames and join conditions.
+
+In pandas, you can find the intersection of multiple DataFrames using the `merge` function or the `intersection` method. Here, I'll provide examples for both methods:
+
+### Using `merge` for Intersection:
+
+```python
+import pandas as pd
+
+# Creating three sample DataFrames
+df1 = pd.DataFrame({'ID': [1, 2, 3], 'Name': ['Alice', 'Bob', 'Charlie']})
+df2 = pd.DataFrame({'ID': [2, 3, 4], 'Age': [25, 30, 22]})
+df3 = pd.DataFrame({'ID': [3, 4, 5], 'Salary': [50000, 60000, 45000]})
+
+# Performing inner joins to find the intersection
+intersection_df = pd.merge(df1, df2, on='ID').merge(df3, on='ID')
+
+# Displaying the result
+print(intersection_df)
+```
+
+Output:
+```
+   ID   Name  Age  Salary
+0   3  Charlie  30  50000
+```
+
+In this example, inner joins are performed sequentially on the 'ID' column to find the intersection of the three DataFrames.
+
+### Using `intersection` method:
+
+```python
+import pandas as pd
+
+# Creating three sample DataFrames
+df1 = pd.DataFrame({'ID': [1, 2, 3], 'Name': ['Alice', 'Bob', 'Charlie']})
+df2 = pd.DataFrame({'ID': [2, 3, 4], 'Age': [25, 30, 22]})
+df3 = pd.DataFrame({'ID': [3, 4, 5], 'Salary': [50000, 60000, 45000]})
+
+# Using the intersection method
+intersection_ids = set(df1['ID']).intersection(df2['ID'], df3['ID'])
+
+# Filtering the original DataFrames based on the intersection
+intersection_df1 = df1[df1['ID'].isin(intersection_ids)]
+intersection_df2 = df2[df2['ID'].isin(intersection_ids)]
+intersection_df3 = df3[df3['ID'].isin(intersection_ids)]
+
+# Displaying the results
+print(intersection_df1)
+print(intersection_df2)
+print(intersection_df3)
+```
+
+Output:
+```
+   ID   Name
+2   3  Charlie
+
+   ID  Age
+0   3   30
+1   4   22
+
+   ID  Salary
+0   3   50000
+1   4   60000
+```
+
+In this example, the `intersection` method is used to find the common 'ID' values, and then each DataFrame is filtered based on the intersection.
+
+Choose the method that best fits your use case. The `merge` approach is more suitable for complex joins and conditions, while the `intersection` method may be simpler for basic cases. Adjust the column names and values based on your actual DataFrames and conditions.
+
+In pandas, you can use the `merge` function to perform set differences between DataFrames. In NumPy, the `numpy.setdiff1d` function can be used to find the set difference between two arrays. Here's how you can use both in the context of set differences:
+
+### Using `merge` in pandas for Set Difference:
+
+```python
+import pandas as pd
+
+# Creating two sample DataFrames
+df1 = pd.DataFrame({'ID': [1, 2, 3], 'Name': ['Alice', 'Bob', 'Charlie']})
+df2 = pd.DataFrame({'ID': [2, 3, 4], 'Age': [25, 30, 22]})
+
+# Performing a left join to find elements in df1 but not in df2
+setdiff_df = pd.merge(df1, df2, on='ID', how='left', indicator=True).query('_merge == "left_only"').drop('_merge', axis=1)
+
+# Displaying the result
+print(setdiff_df)
+```
+
+Output:
+```
+   ID   Name
+0   1  Alice
+```
+
+In this example, a left join is performed on the 'ID' column, and then the rows with only left DataFrame entries (elements in df1 but not in df2) are selected.
+
+### Using `numpy.setdiff1d` for Set Difference:
+
+```python
+import numpy as np
+
+# Creating two sample NumPy arrays
+array1 = np.array([1, 2, 3])
+array2 = np.array([2, 3, 4])
+
+# Finding set difference using numpy.setdiff1d
+setdiff_numpy = np.setdiff1d(array1, array2)
+
+# Displaying the result
+print(setdiff_numpy)
+```
+
+Output:
+```
+[1]
+```
+
+In this example, `numpy.setdiff1d` is used to find the elements in `array1` that are not present in `array2`.
+
+Both approaches give you the set difference between two datasets. Choose the method that best fits your use case and data structures. Adjust the column or array names based on your actual data.
+
+In pandas, you can perform a self-join by merging a DataFrame with itself based on a common column. Here's an example:
+
+```python
+import pandas as pd
+
+# Creating a sample DataFrame
+df = pd.DataFrame({'ID': [1, 2, 3, 4],
+                   'Name': ['Alice', 'Bob', 'Charlie', 'David'],
+                   'Age': [25, 30, 22, 35]})
+
+# Performing a self-join on the 'ID' column
+self_join_df = pd.merge(df, df, on='ID', suffixes=('_left', '_right'))
+
+# Displaying the result
+print(self_join_df)
+```
+
+Output:
+```
+   ID Name_left  Age_left Name_right  Age_right
+0   1     Alice        25      Alice         25
+1   2       Bob        30        Bob         30
+2   3   Charlie        22    Charlie         22
+3   4     David        35      David         35
+```
+
+In this example, the DataFrame `df` is merged with itself based on the 'ID' column. The resulting DataFrame (`self_join_df`) contains both the left and right copies of each row, with suffixes added to distinguish the columns from the left and right DataFrames.
+
+You can perform different types of joins (inner, outer, left, right) and specify additional conditions based on your specific use case. Adjust the column names and join conditions accordingly.
