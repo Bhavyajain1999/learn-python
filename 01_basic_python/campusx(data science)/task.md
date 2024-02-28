@@ -375,3 +375,91 @@ Use the following code for your parent Vehicle class.
 Write a class FlexibleDict upon builtin dict class with above required functionality.
 
 Hint- dict[key] => dict.__getitem__(key)
+
+
+101. Write a function get_final_line(filename), which takes filename as input and return final line of the file.
+Note: You can choose any file of your choice.
+
+102. Read through a text file, line by line. Use a dict to keep track of how many times each vowel (a, e, i, o, and u) appears in the file. Print the resulting tabulation -- dictionary.
+
+103.  Create a text file (using an editor, not necessarily Python) containing two tab separated columns, with each column containing a number. Then use Python to read through the file you’ve created. For each line, multiply each first number by the second and include it in the file in third column. In last add a line Total, by summing the value of third column
+
+104. Create line wise reverse of a file
+Write a function which takes two arguments: the names of the input file (to be read from) and the output file (which will be created).
+
+For example, if a file looks like
+
+abc def
+ghi jkl
+
+105. Create a Serialized dict of frequency of words in the file. And from given list of words, using serialized dict show word count.
+List of word will be given
+
+106. Given a string calculate length of the string using recursion.
+
+107. Write a function that accepts two numbers and returns their greatest common divisior. Without using any loop
+def gcd(int, int) => int
+
+108. Use your recursive function to write a program that reads two strings from the user and displays the edit distance between them.
+
+The edit distance between two strings is a measure of their similarity—the smaller the edit distance, the more similar the strings are with regard to the minimum number of insert, delete and substitute operations needed to transform one string into the other.
+
+Consider the strings kitten and sitting. The first string can be transformed into the second string with the following operations:
+
+Substitute the k with an s,
+substitute the e with an i,
+and insert a g at the end of the string.
+This is the smallest number of operations that can be performed to transform kitten into sitting. As a result, the edit distance is 3.
+
+Write a recursive function that computes the edit distance between two strings.
+
+
+Let s and t be the strings
+    If the length of s is 0 then
+        Return the length of t
+    Else if the length of t is 0 then
+        Return the length of s
+    Else
+        Set cost to 0
+        If the last character in s does not equal the last character in t then
+            Set cost to 1
+        Set d1 equal to the edit distance between all characters except the last one in s, and all characters in t, plus 1
+        Set d2 equal to the edit distance between all characters in s, and all characters except the last one in t, plus 1
+
+        Set d3 equal to the edit distance between all characters except the last one in s, and all characters except the last one in t, plus cost
+        Return the minimum of d1, d2 and d3
+
+109. Run-Length Encoding
+Run-length encoding is a simple data compression technique that can be effective when repeated values occur at adjacent positions within a list. Compression is achieved by replacing groups of repeated values with one copy of the value, followed by the number of times that the value should be repeated. For example, the list
+
+["A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "B", "B", "B", "B", "A", "A", "A", "A", "A", "A", "B"]
+would be compressed as ["A", 12, "B", 4, "A", 6, "B", 1].
+
+Write a recursive function that implements the run-length compression technique described above. Your function will take a list or a string as its only parameter. It should return the run-length compressed list as its only result. Include a main program that reads a string from the user, compresses it, and displays the run-length encoded result.
+
+110. Write a recursive function to convert a decimal to binary.
+
+111.  You are given a function definition. There might be several issues on execution of this function. You are asked to do exception handling for diffrent errors that this function goes in to without altering this function. And print error text.
+
+112. You are given a code snippet. There might be several issues on execution of this code. You are asked to do exception handling for diffrent errors, condition is what ever happens we need to execute last line printing correct result of sum of elements.
+List have elemnts as any no of key-pair dict with key as list index and value as any integer, integers and numeric-strings. There is always only one element in the dict.
+
+113. File Handling with Exception handling
+Write a program that opens a text file and write data to it as "Hello, Good Morning!!!". Handle exceptions that can be generated during the I/O operations. Do not show the success message on the main exception handling block (write inside the else block).
+
+114. Write a number game program. Ask the user to enter a number. If the number is greater than number to be guessed, raise a ValueTooLarge exception. If the value is smaller the number to be guessed the, raise a ValueTooSmall exception and prompt the user to enter again. Quit the program only when the user enters the correct number. Also raise GuessError if user guess a number less than 1.
+
+115. Cast vote
+Write a program that validate name and age as entered by the user to determine whether the person can cast vote or not. To handle the age, create InvalidAge exception and for name, create InvalidName exception. The name will be invalid when the string will be empty or name has only one word.
+
+Example 1:
+
+Input:
+
+Enter the name:               goransh singh
+Enter the age: 25
+Output:
+
+Goransh Singh  Congratulation !!! You can vote.
+
+116. Write a python function which infinitely prints natural numbers in a single line. Raise the StopIteration exception after displaying first 20 numnbers to exit from the program.
