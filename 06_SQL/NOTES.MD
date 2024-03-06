@@ -1146,3 +1146,51 @@ SELECT FLOOR(5.7) AS floor_number;
 ```
 
 These are the basic concepts of SQL queries and functions. Let me know if you need further explanation on any topic!
+
+Sure, let's go through each of these concepts in SQL with examples:
+
+1. **Sorting Data**: Sorting data in SQL is done using the `ORDER BY` clause. This clause sorts the result set of a query based on one or more columns. By default, it sorts in ascending order, but you can specify `ASC` for ascending or `DESC` for descending order.
+
+   Example:
+   ```sql
+   SELECT * FROM employees
+   ORDER BY salary DESC;
+   ```
+
+2. **Order By**: The `ORDER BY` clause is used to sort the result set returned by a SELECT statement. It can be used with single or multiple columns. If multiple columns are specified, the result set is sorted based on the first column, and if there are ties, the second column is used for sorting, and so on.
+
+   Example:
+   ```sql
+   SELECT * FROM students
+   ORDER BY grade DESC, name ASC;
+   ```
+
+3. **Grouping Data**: Grouping data in SQL is done using the `GROUP BY` clause. It groups rows that have the same values into summary rows, like "total" or "count". Aggregation functions like SUM(), AVG(), COUNT(), MAX(), and MIN() can be used on the grouped data.
+
+   Example:
+   ```sql
+   SELECT department, COUNT(*) as num_employees
+   FROM employees
+   GROUP BY department;
+   ```
+
+4. **Having**: The `HAVING` clause is used in combination with the `GROUP BY` clause to filter the results of aggregation. It allows you to apply a filter condition to the groups of rows returned by the `GROUP BY` clause.
+
+   Example:
+   ```sql
+   SELECT department, AVG(salary) as avg_salary
+   FROM employees
+   GROUP BY department
+   HAVING AVG(salary) > 50000;
+   ```
+
+5. **2nd Largest**: To find the second largest value in a column in SQL, you can use the `LIMIT` clause with a combination of `ORDER BY`. You order the column in descending order and then limit the result set to one row offset by 1.
+
+   Example:
+   ```sql
+   SELECT salary FROM employees
+   ORDER BY salary DESC
+   LIMIT 1 OFFSET 1;
+   ```
+
+This query will return the second highest salary from the employees table.
