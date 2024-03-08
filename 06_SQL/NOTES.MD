@@ -1589,3 +1589,211 @@ The result would look like this:
 ```
 
 This example demonstrates how a self join can be used to retrieve information from a table by comparing rows within the same table.
+
+In SQL, the `DATE` function is used to format a date value or to extract parts of a date. It is often used in conjunction with other functions for manipulating date values. Here's an explanation along with some examples:
+
+### Syntax:
+The syntax of the `DATE` function varies slightly depending on the SQL database system you're using, but generally, it's used like this:
+
+```sql
+DATE(expression)
+```
+
+### Example 1: Formatting a Date
+Suppose you have a table `Orders` with a column `order_date` that stores dates in the format 'YYYY-MM-DD'. You want to retrieve only the date part of `order_date`.
+
+```sql
+SELECT DATE(order_date) AS formatted_order_date
+FROM Orders;
+```
+
+This will return the `order_date` column values formatted as dates.
+
+### Example 2: Extracting Parts of a Date
+Suppose you have a table `Employees` with a column `hire_date` storing the hire date of employees. You want to extract the year from the hire date.
+
+```sql
+SELECT YEAR(DATE(hire_date)) AS hire_year
+FROM Employees;
+```
+
+This will return only the year part of the hire date.
+
+### Example 3: Using Current Date
+Suppose you want to retrieve all orders placed today. You can use the `DATE` function along with the `CURDATE()` function (or equivalent functions like `GETDATE()` in SQL Server or `SYSDATE` in Oracle).
+
+```sql
+SELECT *
+FROM Orders
+WHERE DATE(order_date) = CURDATE();
+```
+
+This query retrieves all orders where the `order_date` is equal to the current date.
+
+### Example 4: Calculating Date Differences
+Suppose you want to calculate the number of days between the current date and the hire date of employees.
+
+```sql
+SELECT DATEDIFF(CURDATE(), hire_date) AS days_since_hire
+FROM Employees;
+```
+
+This will return the number of days since each employee was hired.
+
+### Example 5: Using a Date Literal
+In some database systems like Oracle, you can use date literals directly in queries. For example:
+
+```sql
+SELECT *
+FROM Orders
+WHERE order_date = DATE '2024-03-08';
+```
+
+This query retrieves all orders placed on March 8, 2024.
+
+### Note:
+- The exact syntax and functions may vary slightly depending on the SQL database system you are using (MySQL, PostgreSQL, SQL Server, Oracle, etc.). Always refer to the documentation specific to your database system for accurate syntax and usage details.
+- In some SQL databases, `DATE` is not a standalone function but rather a data type or a part of date manipulation functions like `TO_DATE()` (Oracle) or `CAST()` (SQL Server).
+
+A subquery, also known as a nested query or inner query, is a query nested within another SQL query. It's enclosed within parentheses and is often used within a `SELECT`, `INSERT`, `UPDATE`, or `DELETE` statement to retrieve or manipulate data based on the results of another query. Subqueries can be used in various ways, including filtering data, retrieving aggregated information, or performing complex data manipulations. Let's delve into details with examples:
+
+### Syntax:
+The basic syntax of a subquery looks like this:
+
+```sql
+SELECT column1, column2, ...
+FROM table1
+WHERE column1 = (SELECT column1 FROM table2 WHERE condition);
+```
+
+### Example 1: Filtering with Subquery
+Suppose you have two tables: `Orders` and `Customers`. You want to retrieve all orders from customers who are from a specific city, say 'New York'.
+
+```sql
+SELECT order_id, order_date, customer_id
+FROM Orders
+WHERE customer_id IN (SELECT customer_id FROM Customers WHERE city = 'New York');
+```
+
+This subquery retrieves all customer IDs from the `Customers` table who are from 'New York', and the outer query fetches all orders from those customers.
+
+### Example 2: Using Subquery with Aggregation
+Suppose you want to find customers who have placed more than two orders.
+
+```sql
+SELECT customer_id, COUNT(*) AS order_count
+FROM Orders
+GROUP BY customer_id
+HAVING COUNT(*) > 2;
+```
+
+This query finds the count of orders for each customer and filters only those with more than two orders. Here, the subquery is implicitly used within the `HAVING` clause to filter the aggregated results.
+
+### Example 3: Subquery in INSERT Statement
+Suppose you want to insert data into a table based on the results of another query.
+
+```sql
+INSERT INTO NewTable (column1, column2)
+SELECT column1, column2
+FROM OldTable
+WHERE condition;
+```
+
+This inserts data into `NewTable` by selecting specific columns from `OldTable` based on a condition.
+
+### Example 4: Subquery in UPDATE Statement
+Suppose you want to update a column in a table based on the results of a subquery.
+
+```sql
+UPDATE Table1
+SET column1 = (SELECT column2 FROM Table2 WHERE condition)
+WHERE condition;
+```
+
+This updates `column1` in `Table1` with the values retrieved from `column2` in `Table2` based on a condition.
+
+### Example 5: Subquery in DELETE Statement
+Suppose you want to delete rows from a table based on the results of a subquery.
+
+```sql
+DELETE FROM Table1
+WHERE column1 IN (SELECT column1 FROM Table2 WHERE condition);
+```
+
+This deletes rows from `Table1` where `column1` matches the results of the subquery.
+
+### Note:
+- Subqueries can be nested within other subqueries to create more complex queries.
+- Subqueries can sometimes be less efficient than joins, especially if the result set of the subquery is large. It's important to evaluate the performance implications when using subqueries.
+- Always consider the readability and maintainability of your queries when using subqueries, especially in complex scenarios.Subqueries, or nested queries, can be categorized into several types based on their usage and where they appear within a SQL statement. Here are some common types of subqueries:
+
+1. **Scalar Subquery**:
+   - A scalar subquery returns a single value and can be used anywhere an expression can be used within a SQL statement.
+   - Example:
+
+    ```sql
+    SELECT column1, (SELECT MAX(column2) FROM table2) AS max_value
+    FROM table1;
+    ```
+
+2. **Single-Row Subquery**:
+   - A single-row subquery returns a single row of data and is used in situations where a single value is expected, but the subquery returns multiple columns.
+   - Example:
+
+    ```sql
+    SELECT column1
+    FROM table1
+    WHERE column2 = (SELECT column2 FROM table2 WHERE condition);
+    ```
+
+3. **Multiple-Row Subquery**:
+   - A multiple-row subquery returns multiple rows of data and is typically used with operators like `IN`, `ANY`, or `ALL`.
+   - Example:
+
+    ```sql
+    SELECT column1
+    FROM table1
+    WHERE column2 IN (SELECT column2 FROM table2 WHERE condition);
+    ```
+
+4. **Correlated Subquery**:
+   - A correlated subquery references columns from the outer query, and the inner query execution depends on the outer query. These subqueries are executed for each row of the outer query.
+   - Example:
+
+    ```sql
+    SELECT column1
+    FROM table1 t1
+    WHERE column2 > (SELECT AVG(column2) FROM table1 t2 WHERE t1.column3 = t2.column3);
+    ```
+
+5. **Nested Subquery**:
+   - A nested subquery contains another subquery within it. These can be of any type of subquery.
+   - Example:
+
+    ```sql
+    SELECT column1
+    FROM table1
+    WHERE column2 = (SELECT MAX(column2) FROM (SELECT * FROM table2) AS nested_table);
+    ```
+
+6. **Correlated EXISTS Subquery**:
+   - Similar to a correlated subquery, but uses the `EXISTS` keyword. These subqueries are often used for existence checks.
+   - Example:
+
+    ```sql
+    SELECT column1
+    FROM table1 t1
+    WHERE EXISTS (SELECT 1 FROM table2 t2 WHERE t1.column2 = t2.column2);
+    ```
+
+7. **Correlated NOT EXISTS Subquery**:
+   - Similar to correlated EXISTS subquery, but negated with `NOT EXISTS`. Used for negative existence checks.
+   - Example:
+
+    ```sql
+    SELECT column1
+    FROM table1 t1
+    WHERE NOT EXISTS (SELECT 1 FROM table2 t2 WHERE t1.column2 = t2.column2);
+    ```
+
+These are some of the common types of subqueries in SQL. Understanding when and how to use each type is crucial for writing efficient and effective SQL queries.
