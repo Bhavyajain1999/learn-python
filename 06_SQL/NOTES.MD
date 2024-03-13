@@ -1797,3 +1797,702 @@ This deletes rows from `Table1` where `column1` matches the results of the subqu
     ```
 
 These are some of the common types of subqueries in SQL. Understanding when and how to use each type is crucial for writing efficient and effective SQL queries.
+
+In SQL, a window function (also known as an analytic function or windowed function) is a type of function that performs a calculation across a set of table rows that are somehow related to the current row, without grouping the rows into a single output. These functions can be particularly useful for generating summary statistics, rankings, and other analytics without needing to group the data.
+
+The basic syntax of a window function in SQL is as follows:
+
+```sql
+<function>() OVER (
+    [PARTITION BY <partition_column>]
+    ORDER BY <order_column>
+    [ROWS <window_frame_clause>]
+)
+```
+
+Let's break down each component:
+
+1. `<function>()`: This represents the aggregate function or analytical function you want to apply to the window. Examples include `SUM()`, `AVG()`, `ROW_NUMBER()`, `RANK()`, `DENSE_RANK()`, `NTILE()`, etc.
+
+2. `OVER ()`: This is the clause that defines the window over which the function operates. It's followed by a set of parentheses that can contain additional clauses to specify the window boundaries and partitioning.
+
+3. `[PARTITION BY <partition_column>]`: This clause divides the result set into partitions to which the function is applied separately. If omitted, the function operates on the entire result set as a single partition.
+
+4. `ORDER BY <order_column>`: This clause defines the order of rows within each partition. It determines the sequence of rows that the function considers when performing calculations.
+
+5. `[ROWS <window_frame_clause>]`: This optional clause defines the window frame or subset of rows within each partition that the function operates on. It allows you to specify a sliding window of rows relative to the current row.
+
+Now, let's see some examples to understand how window functions work:
+
+### Example 1: Calculating a Running Total
+
+Suppose we have a table `sales` with columns `order_date` and `amount`. We want to calculate the running total of sales amount for each day.
+
+```sql
+SELECT order_date,
+       amount,
+       SUM(amount) OVER (ORDER BY order_date) AS running_total
+FROM sales;
+```
+
+### Example 2: Ranking Sales Performance
+
+Let's say we want to rank the salespeople based on their total sales amount.
+
+```sql
+SELECT salesperson_id,
+       SUM(amount) AS total_sales,
+       RANK() OVER (ORDER BY SUM(amount) DESC) AS sales_rank
+FROM sales
+GROUP BY salesperson_id;
+```
+
+### Example 3: Finding Lead and Lag Values
+
+Suppose we want to compare each salesperson's sales amount with the previous and next sales amounts.
+
+```sql
+SELECT salesperson_id,
+       order_date,
+       amount,
+       LAG(amount) OVER (PARTITION BY salesperson_id ORDER BY order_date) AS prev_amount,
+       LEAD(amount) OVER (PARTITION BY salesperson_id ORDER BY order_date) AS next_amount
+FROM sales;
+```
+
+These examples demonstrate the versatility and power of window functions in SQL. They allow for complex calculations and analytics while still maintaining a simple and intuitive syntax.
+In SQL, ranking functions (`RANK()`, `DENSE_RANK()`, and `ROW_NUMBER()`) are window functions that assign a rank to each row based on the specified ordering within a partition or the entire result set. These functions are commonly used in analytics to identify the relative position of rows in a dataset, such as ranking sales figures, students' grades, or any other ordered data.
+
+Let's explore each of these ranking functions in detail, along with examples:
+
+### 1. ROW_NUMBER()
+
+`ROW_NUMBER()` assigns a unique sequential integer to each row in the partition, starting from 1 for the first row.
+
+**Syntax:**
+```sql
+ROW_NUMBER() OVER (PARTITION BY <partition_column> ORDER BY <order_column>)
+```
+
+**Example:**
+Suppose we have a table `students` with columns `student_id` and `score`. We want to assign a unique rank to each student based on their score.
+
+```sql
+SELECT student_id,
+       score,
+       ROW_NUMBER() OVER (ORDER BY score DESC) AS rank
+FROM students;
+```
+
+### 2. RANK()
+
+`RANK()` assigns a unique rank to each row in the partition, but it may leave gaps in the ranking sequence for rows with the same value.
+
+**Syntax:**
+```sql
+RANK() OVER (PARTITION BY <partition_column> ORDER BY <order_column>)
+```
+
+**Example:**
+Let's use the same `students` table to rank students based on their score, but this time using `RANK()`.
+
+```sql
+SELECT student_id,
+       score,
+       RANK() OVER (ORDER BY score DESC) AS rank
+FROM students;
+```
+
+### 3. DENSE_RANK()
+
+`DENSE_RANK()` also assigns a unique rank to each row in the partition, but it does not leave gaps in the ranking sequence for rows with the same value.
+
+**Syntax:**
+```sql
+DENSE_RANK() OVER (PARTITION BY <partition_column> ORDER BY <order_column>)
+```
+
+**Example:**
+Continuing with the `students` table, let's rank students based on their score using `DENSE_RANK()`.
+
+```sql
+SELECT student_id,
+       score,
+       DENSE_RANK() OVER (ORDER BY score DESC) AS rank
+FROM students;
+```
+
+### Comparison:
+
+Let's consider the following dataset:
+
+```
+student_id | score
+-----------|------
+1          | 85
+2          | 75
+3          | 90
+4          | 75
+5          | 80
+```
+
+- `ROW_NUMBER()` would assign ranks like: 1, 2, 3, 4, 5.
+- `RANK()` would assign ranks like: 1, 3, 5, 3, 2.
+- `DENSE_RANK()` would assign ranks like: 1, 2, 3, 2, 4.
+
+### Conclusion:
+
+These ranking functions provide flexibility in analyzing and presenting ordered data in SQL. Understanding their differences is crucial in selecting the appropriate function for specific analytical requirements. Whether you need a strict sequence (`ROW_NUMBER()`), a ranking with gaps (`RANK()`), or a ranking without gaps (`DENSE_RANK()`), SQL provides the tools to achieve your desired result.
+
+In SQL, `FIRST_VALUE()`, `LAST_VALUE()`, and `NTH_VALUE()` are window functions used to retrieve specific values from within a window of rows defined by the query's `PARTITION BY` and `ORDER BY` clauses. These functions can be particularly useful for retrieving the first, last, or nth value within a window of rows, respectively.
+
+Let's dive into each function in detail:
+
+### 1. FIRST_VALUE()
+
+The `FIRST_VALUE()` function returns the value of the specified expression (column or expression) from the first row within the window partition.
+
+**Syntax:**
+```sql
+FIRST_VALUE(expression) OVER (PARTITION BY partition_column ORDER BY order_column [ROWS frame_clause])
+```
+
+**Example:**
+Suppose we have a table `sales` with columns `product_id`, `order_date`, and `amount`. We want to find the first order amount for each product.
+
+```sql
+SELECT product_id,
+       order_date,
+       amount,
+       FIRST_VALUE(amount) OVER (PARTITION BY product_id ORDER BY order_date) AS first_order_amount
+FROM sales;
+```
+
+### 2. LAST_VALUE()
+
+The `LAST_VALUE()` function returns the value of the specified expression from the last row within the window partition. However, it's important to note that in some SQL database systems, `LAST_VALUE()` doesn't work as expected out-of-the-box due to the way window functions are evaluated.
+
+**Syntax:**
+```sql
+LAST_VALUE(expression) OVER (PARTITION BY partition_column ORDER BY order_column [ROWS frame_clause])
+```
+
+**Example:**
+Continuing with the `sales` table, if we want to find the last order amount for each product:
+
+```sql
+SELECT product_id,
+       order_date,
+       amount,
+       LAST_VALUE(amount) OVER (PARTITION BY product_id ORDER BY order_date) AS last_order_amount
+FROM sales;
+```
+
+### 3. NTH_VALUE()
+
+The `NTH_VALUE()` function returns the value of the specified expression from the nth row within the window partition. It allows you to specify the position of the row you want to retrieve.
+
+**Syntax:**
+```sql
+NTH_VALUE(expression, n) OVER (PARTITION BY partition_column ORDER BY order_column [ROWS frame_clause])
+```
+
+**Example:**
+Suppose we want to find the second order amount for each product:
+
+```sql
+SELECT product_id,
+       order_date,
+       amount,
+       NTH_VALUE(amount, 2) OVER (PARTITION BY product_id ORDER BY order_date) AS second_order_amount
+FROM sales;
+```
+
+### Conclusion:
+
+These window functions (`FIRST_VALUE()`, `LAST_VALUE()`, and `NTH_VALUE()`) provide a powerful mechanism for retrieving specific values from within a window of rows in SQL queries. They can be used to perform various analytical tasks, such as identifying the first or last occurrence of an event, or retrieving specific values based on their position within a window.
+
+In SQL, a frame (also known as a window frame or window specification) is a set of rows within a partition defined for window functions. Frames specify the subset of rows over which a window function operates. They allow you to control the range of rows that are considered for each calculation, such as aggregations, rankings, and other analytical functions.
+
+Frames are defined using the `ROWS` clause within the `OVER()` clause of a window function. The `ROWS` clause specifies how to determine the boundaries of the frame relative to the current row being processed.
+
+The basic syntax of the `ROWS` clause is:
+
+```sql
+[ROWS frame_clause]
+```
+
+The `frame_clause` can take several forms to define the frame:
+
+1. **Unbounded Frame:**
+   - `UNBOUNDED PRECEDING`: Includes all rows from the beginning of the partition up to the current row.
+   - `UNBOUNDED FOLLOWING`: Includes all rows from the current row to the end of the partition.
+   - Example:
+
+    ```sql
+    SUM(salary) OVER (ORDER BY hire_date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_total
+    ```
+
+2. **Bounded Frame:**
+   - `<expression> PRECEDING`: Specifies a number of rows preceding the current row.
+   - `<expression> FOLLOWING`: Specifies a number of rows following the current row.
+   - Example:
+
+    ```sql
+    AVG(salary) OVER (ORDER BY hire_date ROWS BETWEEN 3 PRECEDING AND 1 FOLLOWING) AS moving_average
+    ```
+
+3. **Current Row Frame:**
+   - `CURRENT ROW`: Includes only the current row.
+   - Example:
+
+    ```sql
+    MAX(salary) OVER (ORDER BY hire_date ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS max_in_window
+    ```
+
+### Example:
+
+Let's consider a scenario where we have a table `employee` with columns `employee_id`, `hire_date`, and `salary`. We want to calculate the running total salary for each employee, considering the last 3 employees hired before the current employee.
+
+```sql
+SELECT employee_id,
+       hire_date,
+       salary,
+       SUM(salary) OVER (ORDER BY hire_date ROWS BETWEEN 3 PRECEDING AND CURRENT ROW) AS running_total
+FROM employee;
+```
+
+In this example:
+- `ORDER BY hire_date` specifies the order in which rows are processed.
+- `ROWS BETWEEN 3 PRECEDING AND CURRENT ROW` defines the frame, including the current row and the three rows preceding it.
+
+This query calculates the running total salary for each employee, considering the salary of the current employee and the three employees hired immediately before them.
+
+Frames in SQL provide powerful capabilities for performing window calculations, allowing you to precisely control the range of rows considered for each calculation in analytical queries.
+
+In SQL, `LEAD()` and `LAG()` are window functions used to access data from subsequent and preceding rows within the result set, respectively. These functions can be particularly useful for comparing data between consecutive rows, calculating differences, and identifying patterns.
+
+Let's delve into each function in detail:
+
+### 1. LAG()
+
+The `LAG()` function accesses data from the previous row within the window partition. It allows you to retrieve a column value from the preceding row relative to the current row being processed.
+
+**Syntax:**
+```sql
+LAG(column_expression, offset, default_value) OVER (ORDER BY order_column)
+```
+
+- `column_expression`: The column whose value from the previous row you want to retrieve.
+- `offset`: The number of rows backward from the current row to retrieve data from. By default, the offset is 1, meaning the previous row.
+- `default_value`: (Optional) The value to return if there is no preceding row.
+
+**Example:**
+Suppose we have a table `sales` with columns `order_date` and `revenue`. We want to calculate the difference in revenue between consecutive days.
+
+```sql
+SELECT order_date,
+       revenue,
+       LAG(revenue, 1, 0) OVER (ORDER BY order_date) AS previous_revenue,
+       revenue - LAG(revenue, 1, 0) OVER (ORDER BY order_date) AS revenue_difference
+FROM sales;
+```
+
+In this example:
+- `LAG(revenue, 1, 0)` retrieves the revenue from the previous row, with a default value of 0 if there is no preceding row.
+- `revenue - LAG(revenue, 1, 0)` calculates the revenue difference between the current row and the previous row.
+
+### 2. LEAD()
+
+The `LEAD()` function accesses data from the next row within the window partition. It allows you to retrieve a column value from the subsequent row relative to the current row being processed.
+
+**Syntax:**
+```sql
+LEAD(column_expression, offset, default_value) OVER (ORDER BY order_column)
+```
+
+- `column_expression`: The column whose value from the next row you want to retrieve.
+- `offset`: The number of rows forward from the current row to retrieve data from. By default, the offset is 1, meaning the next row.
+- `default_value`: (Optional) The value to return if there is no subsequent row.
+
+**Example:**
+Continuing with the `sales` table, if we want to calculate the difference in revenue between consecutive days using `LEAD()`:
+
+```sql
+SELECT order_date,
+       revenue,
+       LEAD(revenue, 1, 0) OVER (ORDER BY order_date) AS next_revenue,
+       LEAD(revenue, 1, 0) OVER (ORDER BY order_date) - revenue AS revenue_difference
+FROM sales;
+```
+
+In this example:
+- `LEAD(revenue, 1, 0)` retrieves the revenue from the next row, with a default value of 0 if there is no subsequent row.
+- `LEAD(revenue, 1, 0) - revenue` calculates the revenue difference between the next row and the current row.
+
+### Conclusion:
+
+`LAG()` and `LEAD()` are powerful tools in SQL for accessing data from preceding and subsequent rows within a window partition, respectively. They enable you to perform various analytical tasks such as computing differences, identifying trends, and detecting anomalies by comparing values between adjacent rows in a result set.
+Certainly! You can use window functions in SQL to calculate cumulative sums, cumulative averages, running averages, and other similar calculations. Let's explore how you can achieve these using window functions:
+
+### 1. Cumulative Sum:
+
+To calculate the cumulative sum of a column, you can use the `SUM()` function with the `OVER` clause, specifying the ordering of rows.
+
+**Example:**
+```sql
+SELECT order_date,
+       revenue,
+       SUM(revenue) OVER (ORDER BY order_date) AS cumulative_sum
+FROM sales;
+```
+
+### 2. Cumulative Average:
+
+To calculate the cumulative average of a column, you can use the `AVG()` function with the `OVER` clause, specifying the ordering of rows.
+
+**Example:**
+```sql
+SELECT order_date,
+       revenue,
+       AVG(revenue) OVER (ORDER BY order_date) AS cumulative_avg
+FROM sales;
+```
+
+### 3. Running Average:
+
+To calculate the running average of a column over a fixed window size, you can use the `AVG()` function with the `OVER` clause and specify the number of preceding rows in the window frame.
+
+**Example:**
+```sql
+SELECT order_date,
+       revenue,
+       AVG(revenue) OVER (ORDER BY order_date ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS running_avg
+FROM sales;
+```
+
+In this example, `ROWS BETWEEN 2 PRECEDING AND CURRENT ROW` specifies a window frame of the current row and the two preceding rows.
+
+### 4. Cumulative Maximum or Minimum:
+
+To calculate the cumulative maximum or minimum of a column, you can use the `MAX()` or `MIN()` function with the `OVER` clause, specifying the ordering of rows.
+
+**Example:**
+```sql
+SELECT order_date,
+       revenue,
+       MAX(revenue) OVER (ORDER BY order_date) AS cumulative_max,
+       MIN(revenue) OVER (ORDER BY order_date) AS cumulative_min
+FROM sales;
+```
+
+### 5. Other Cumulative Aggregations:
+
+You can also perform other cumulative aggregations such as cumulative count, median, or any other aggregate function available in SQL.
+
+**Example (Cumulative Count):**
+```sql
+SELECT order_date,
+       revenue,
+       COUNT(*) OVER (ORDER BY order_date) AS cumulative_count
+FROM sales;
+```
+
+### Conclusion:
+
+Window functions in SQL provide powerful capabilities for performing various types of cumulative and running calculations. By using the `OVER` clause along with appropriate window frame specifications, you can easily compute cumulative sums, averages, maximums, minimums, and other aggregations efficiently and effectively. These calculations are essential for many analytical tasks, such as trend analysis, time series analysis, and financial modeling.
+
+Certainly! Let's explore how you can perform these calculations using window functions in SQL:
+
+### 1. Percent of Total:
+
+To calculate the percentage of each row's value relative to the total sum of values, you can use the `SUM()` function with the `OVER` clause to compute the total sum, and then divide the value of each row by that total sum.
+
+**Example:**
+```sql
+SELECT order_date,
+       revenue,
+       revenue / SUM(revenue) OVER () AS percent_total
+FROM sales;
+```
+
+### 2. Percent Change:
+
+To calculate the percentage change from one row to the next, you can use the `LAG()` function to retrieve the previous value, and then calculate the percentage change based on the current and previous values.
+
+**Example:**
+```sql
+SELECT order_date,
+       revenue,
+       (revenue - LAG(revenue, 1) OVER (ORDER BY order_date)) / LAG(revenue, 1) OVER (ORDER BY order_date) AS percent_change
+FROM sales;
+```
+
+### 3. Running Streak:
+
+A running streak refers to consecutive occurrences of a specific event. To calculate the running streak, you can use a conditional window function along with the `SUM()` function to count consecutive occurrences.
+
+**Example:**
+```sql
+SELECT order_date,
+       event,
+       SUM(CASE WHEN event = 'success' THEN 1 ELSE 0 END) OVER (ORDER BY order_date) AS running_streak
+FROM events;
+```
+
+### 4. Percentile:
+
+To calculate percentiles, you can use the `PERCENTILE_CONT()` or `PERCENTILE_DISC()` functions available in some SQL databases. These functions return the value at a specified percentile within a group.
+
+**Example:**
+```sql
+SELECT order_date,
+       revenue,
+       PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY revenue) OVER () AS median_revenue
+FROM sales;
+```
+
+### 5. Exponential Moving Average (EMA):
+
+To calculate the exponential moving average, you can use a recursive CTE (Common Table Expression) or a self-join approach. The formula for EMA involves weighting the previous average with a smoothing factor and adding the current value with a complementary weight.
+
+**Example (Recursive CTE):**
+```sql
+WITH recursive ema_cte AS (
+    SELECT order_date,
+           revenue,
+           revenue AS ema
+    FROM sales
+    WHERE order_date = (SELECT MIN(order_date) FROM sales)
+    
+    UNION ALL
+    
+    SELECT s.order_date,
+           s.revenue,
+           (0.3 * s.revenue) + (0.7 * ema_cte.ema) AS ema
+    FROM sales s
+    JOIN ema_cte ON s.order_date = DATEADD(day, 1, ema_cte.order_date)
+)
+SELECT * FROM ema_cte;
+```
+
+### 6. Z-Score Calculation:
+
+To calculate the Z-score, which measures how many standard deviations a data point is from the mean, you can use the `AVG()` and `STDEV()` functions along with the `OVER` clause.
+
+**Example:**
+```sql
+SELECT order_date,
+       revenue,
+       (revenue - AVG(revenue) OVER ()) / STDEV(revenue) OVER () AS z_score
+FROM sales;
+```
+
+### Conclusion:
+
+Window functions in SQL provide powerful capabilities for performing various types of analytical calculations, including percent of total, percent change, running streaks, percentiles, exponential moving averages, and Z-score calculations. By leveraging these functions along with appropriate window frame specifications, you can efficiently compute these analytics directly within your SQL queries.
+
+In SQL, both `PERCENTILE_DISC()` and `PERCENTILE_CONT()` functions are used to calculate percentiles within a dataset. However, they work slightly differently and are suitable for different use cases:
+
+### 1. PERCENTILE_DISC():
+
+The `PERCENTILE_DISC()` function (short for percentile discrete) returns the value from a sorted dataset that corresponds to the specified percentile. This function returns an exact value from the dataset rather than interpolating between values. It is typically used when dealing with discrete data or when you want to get an actual data point from the dataset at a particular percentile.
+
+**Syntax:**
+```sql
+PERCENTILE_DISC(percentile) WITHIN GROUP (ORDER BY column) OVER ()
+```
+
+**Example:**
+```sql
+SELECT PERCENTILE_DISC(0.5) WITHIN GROUP (ORDER BY revenue) OVER () AS median_revenue
+FROM sales;
+```
+
+In this example, `PERCENTILE_DISC(0.5)` returns the median revenue from the `sales` table.
+
+### 2. PERCENTILE_CONT():
+
+The `PERCENTILE_CONT()` function (short for percentile continuous) returns a value that is interpolated between two adjacent values in the dataset. This function calculates the percentile by interpolating between the values that bracket the specified percentile. It is typically used when dealing with continuous data or when you want a smoothed estimate of the percentile value.
+
+**Syntax:**
+```sql
+PERCENTILE_CONT(percentile) WITHIN GROUP (ORDER BY column) OVER ()
+```
+
+**Example:**
+```sql
+SELECT PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY revenue) OVER () AS median_revenue
+FROM sales;
+```
+
+In this example, `PERCENTILE_CONT(0.5)` returns an estimate of the median revenue by interpolating between values from the `sales` table.
+
+### Comparison:
+
+- `PERCENTILE_DISC()` provides an exact value from the dataset at the specified percentile and is suitable for discrete data.
+- `PERCENTILE_CONT()` provides an estimate of the percentile by interpolating between values and is suitable for continuous data.
+
+### Conclusion:
+
+The choice between `PERCENTILE_DISC()` and `PERCENTILE_CONT()` depends on your specific requirements and the nature of the data you are working with. If you need an exact value from the dataset at a specific percentile, use `PERCENTILE_DISC()`. If you want a smoothed estimate of the percentile value, use `PERCENTILE_CONT()`.
+
+Segmentation in SQL refers to the process of dividing a dataset into distinct groups or segments based on specific criteria. This can be achieved using various SQL techniques such as conditional statements, aggregations, and window functions. Segmentation is commonly used in analytics and reporting to gain insights into different subsets of data.
+
+Here are several approaches to perform segmentation in SQL:
+
+### 1. Conditional Statements (CASE):
+
+You can use conditional statements such as `CASE` to categorize rows based on specific conditions.
+
+**Example:**
+```sql
+SELECT *,
+       CASE
+           WHEN revenue > 1000 THEN 'High'
+           WHEN revenue > 500 THEN 'Medium'
+           ELSE 'Low'
+       END AS revenue_segment
+FROM sales;
+```
+
+In this example, we segment the `sales` data into three categories based on revenue: 'High', 'Medium', and 'Low'.
+
+### 2. Grouping and Aggregations:
+
+You can group data using the `GROUP BY` clause and perform aggregations to create segments based on aggregate functions.
+
+**Example:**
+```sql
+SELECT category,
+       AVG(revenue) AS avg_revenue
+FROM products
+GROUP BY category;
+```
+
+In this example, we group products by category and calculate the average revenue for each category, effectively segmenting the data by category.
+
+### 3. Window Functions:
+
+Window functions can also be used for segmentation, particularly for ranking and partitioning data into segments based on specific criteria.
+
+**Example:**
+```sql
+SELECT customer_id,
+       order_date,
+       revenue,
+       NTILE(4) OVER (ORDER BY revenue DESC) AS revenue_segment
+FROM orders;
+```
+
+In this example, we use the `NTILE()` function to divide orders into four segments based on revenue.
+
+### 4. Partitioning:
+
+You can partition data into segments using window functions and the `PARTITION BY` clause.
+
+**Example:**
+```sql
+SELECT customer_id,
+       order_date,
+       revenue,
+       ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date) AS order_number
+FROM orders;
+```
+
+In this example, we partition orders by customer_id and assign a row number to each order within the partition, effectively segmenting the orders for each customer.
+
+### Conclusion:
+
+Segmentation in SQL is a powerful technique for dividing data into meaningful groups or segments, allowing for deeper analysis and insights. Depending on the specific requirements and nature of the data, you can use conditional statements, grouping and aggregations, window functions, or partitioning to perform segmentation effectively.
+
+To calculate the cumulative distribution function (CDF) in SQL, you typically use window functions to compute the cumulative sum of frequencies or probabilities for each value in a dataset. The CDF represents the probability that a random variable takes on a value less than or equal to a given value.
+
+Assuming you have a dataset with values and their associated frequencies or probabilities, you can calculate the cumulative distribution function as follows:
+
+```sql
+SELECT value,
+       frequency,
+       SUM(frequency) OVER (ORDER BY value) AS cumulative_frequency,
+       SUM(frequency) OVER () AS total_frequency,
+       SUM(frequency) OVER (ORDER BY value) / SUM(frequency) OVER () AS cumulative_distribution
+FROM your_table;
+```
+
+In this query:
+
+- `value`: Represents the value of the random variable.
+- `frequency`: Represents the frequency or probability of each value.
+- `cumulative_frequency`: Represents the cumulative sum of frequencies up to the current value.
+- `total_frequency`: Represents the total sum of frequencies in the dataset.
+- `cumulative_distribution`: Represents the cumulative distribution function, calculated as the cumulative sum of frequencies divided by the total frequency.
+
+Here's a breakdown of how the query works:
+
+1. The `SUM(frequency) OVER (ORDER BY value)` calculates the cumulative sum of frequencies up to the current row, ordered by the value.
+2. The `SUM(frequency) OVER ()` calculates the total sum of frequencies in the dataset.
+3. Finally, the cumulative distribution is calculated by dividing the cumulative sum of frequencies by the total frequency.
+
+This query provides the cumulative distribution function for each value in the dataset. The resulting cumulative distribution values range from 0 to 1, representing the probability of observing a value less than or equal to each value in the dataset.
+
+Ensure that your dataset is properly aggregated if you're working with frequency data, or normalized if you're working with probability data, to ensure accurate calculations of the cumulative distribution function.
+
+The `CUME_DIST()` function in SQL is a window function that calculates the cumulative distribution of a value within a group of rows. It returns the relative position of a value within the ordered set of values, ranging from 0 to 1. This function is particularly useful for calculating percentiles and quantiles within a dataset.
+
+The `CUME_DIST()` function is often used in conjunction with the `ORDER BY` clause to specify the ordering of rows within the window partition.
+
+Here's the syntax for the `CUME_DIST()` function:
+
+```sql
+CUME_DIST() OVER (PARTITION BY partition_column ORDER BY order_column)
+```
+
+- `PARTITION BY partition_column`: Optional clause that divides the result set into partitions. The `CUME_DIST()` function is computed separately for each partition.
+- `ORDER BY order_column`: Specifies the ordering of rows within the partition. The `CUME_DIST()` function calculates the cumulative distribution based on this order.
+
+Now, let's see an example to illustrate how to use the `CUME_DIST()` function:
+
+Suppose we have a table `scores` with columns `student_id` and `score`, and we want to calculate the cumulative distribution of scores for each student.
+
+```sql
+SELECT student_id,
+       score,
+       CUME_DIST() OVER (PARTITION BY student_id ORDER BY score) AS cumulative_distribution
+FROM scores;
+```
+
+In this example:
+
+- We partition the data by `student_id` using the `PARTITION BY` clause.
+- We order the scores within each partition by the `score` column using the `ORDER BY` clause.
+- The `CUME_DIST()` function calculates the cumulative distribution of each score within its partition, providing a relative position ranging from 0 to 1.
+
+The result of this query will be a dataset where each row includes the student ID, score, and the cumulative distribution of the score for that student. The cumulative distribution value represents the proportion of scores that are less than or equal to the current score within the student's group.
+
+In SQL, you can partition your data by multiple columns using the `PARTITION BY` clause within a window function. Partitioning by multiple columns means that within each partition, the rows are further divided into subgroups based on the values of multiple columns.
+
+Here's the basic syntax for partitioning by multiple columns:
+
+```sql
+PARTITION BY column1, column2, ...
+```
+
+Let's illustrate this with an example:
+
+Suppose you have a table `sales` with columns `region`, `country`, and `revenue`, and you want to calculate the average revenue for each country within each region.
+
+```sql
+SELECT 
+    region,
+    country,
+    AVG(revenue) OVER (PARTITION BY region, country) AS avg_revenue
+FROM 
+    sales;
+```
+
+In this query:
+
+- We partition the data by `region` and `country` using the `PARTITION BY` clause.
+- The `AVG(revenue) OVER (PARTITION BY region, country)` calculates the average revenue for each combination of `region` and `country`.
+
+This query will provide the average revenue for each country within each region. The results will be grouped by both `region` and `country`, allowing you to analyze the data at a more granular level.
