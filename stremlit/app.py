@@ -5,6 +5,8 @@ import matplotlib as plt
 import matplotlib.pyplot as plt
 
 
+
+
 st.set_page_config(layout='wide',page_title='StartUp Analysis')
 
 
@@ -54,6 +56,10 @@ def load_overall_analysis():
     ax3.plot(temp_df['x_axis'], temp_df['amount'])
 
     st.pyplot(fig3)
+  
+
+
+
 
 
 
@@ -164,7 +170,10 @@ def load_investor_details(investor):
     ax2.plot(year_series.index,year_series.values)
 
     st.pyplot(fig2)
+
     show_similar_investors(investor)
+
+
 
 
 def show_similar_investors(selected_investor):
@@ -225,4 +234,9 @@ else:
     if btn2:
             load_investor_details(selected_investor)
     
-    
+
+
+
+
+
+   
