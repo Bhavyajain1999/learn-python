@@ -5,7 +5,7 @@
 **Session 1: Python Basics**
 
 **1. DSMP (Data Science and Machine Learning Program)**
-
+    
 DSMP (Data Science and Machine Learning Program) is a comprehensive program designed to provide individuals with a deep understanding of data science and machine learning concepts. It covers a wide range of topics, including data analysis, machine learning algorithms, and practical applications, all taught using the Python programming language.
 
 **2. About Python**
